@@ -72,6 +72,32 @@ set smartcase
 " turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
 
+
+" Key mappings
+" ********************
+" Map ctrl+movement keys to ctrl+w followed by the movement key.
+" Makes switching between split windows extremely simple.
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-H> <C-W>h
+map <C-L> <C-W>l
+" Map alt+movement keys to ctrl+w followed by the movement key.
+" Makes moving windows much simpler.
+map ∆ <C-W>J
+map ˚ <C-W>K
+map ˙ <C-W>H
+map ¬ <C-W>L
+" Map arrow keys to window resize commands.
+map <Right> 5<C-W>>
+map <Left> 5<C-W><
+map <Up> 5<C-W>+
+map <Down> 5<C-W>-
+
+" When pressing enter it will also run :noh to turn off highlights from previous search.
+nnoremap <CR> :noh<CR>
+
+
+
 " Centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
@@ -83,6 +109,8 @@ endif
 if has("autocmd")
 	" Enable file type detection and sets filetype-specific indetation
 	filetype indent on
+	" Allow vim to load plugins related to the detected file type.
+	filetype plugin on
 	" Treat .json files as .js
 	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 	" Treat .md files as Markdown
