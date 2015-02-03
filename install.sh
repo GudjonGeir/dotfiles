@@ -13,7 +13,7 @@ echo Creating symlinks in your home directory that point to this dotfiles reposi
 ln -s "$PWD/vim" ~/.vim
 ln -s "$PWD/vim/vimrc" ~/.vimrc
 ln -s "$PWD/zshrc" ~/.zshrc
-ln -s "$PWD/.gitconfig" ~/.gitconfig
+ln -s "$PWD/.gitconfig" ~/gitconfig
 
 # Finished.
 echo Dotfiles installation complete.
