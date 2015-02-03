@@ -51,6 +51,9 @@ syntax on
 " Show the cursor position
 set ruler
 
+" Allow background buffers
+set hidden
+
 " Show the current mode
 set showmode
 
@@ -108,9 +111,9 @@ endif
 " Automatic commands
 if has("autocmd")
 	" Enable file type detection and sets filetype-specific indetation
-	filetype indent on
 	" Allow vim to load plugins related to the detected file type.
-	filetype plugin on
+	filetype plugin indent on
+	set autoindent
 	" Treat .json files as .js
 	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 	" Treat .md files as Markdown
