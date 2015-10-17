@@ -22,6 +22,10 @@ alias cl="fc -e -|pbcopy"
 # copy the working directory path
 alias cpwd='pwd|tr -d "\n"|pbcopy'
 
+# Python aliases
+#alias python="python3"
+#alias python2="python"
+
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -87,3 +91,13 @@ export PATH="/usr/local/heroku/bin:$PATH"
 ### Gradle installation
 export GRADLE_HOME="/Users/GGJ/Installations/gradle-2.2.1"
 export PATH="$PATH:$GRADLE_HOME/bin"
+
+[ -s "/Users/GGJ/.dnx/dnvm/dnvm.sh" ] && . "/Users/GGJ/.dnx/dnvm/dnvm.sh" # Load dnvm
+
+### ASP.NET 5
+source ~/.dnx/dnvm/dnvm.sh
+export MONO_MANAGED_WATCHER=disabled
+code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
+
+### nvm
+. ~/.nvm/nvm.sh

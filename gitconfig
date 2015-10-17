@@ -7,4 +7,5 @@
 	br = branch
 	co = checkout
 	df = diff
+	undo = reset --hard HEAD~1
 

@@ -1,12 +1,9 @@
-[submodule "vim/bundle/closetag"]
-	path = vim/bundle/closetag
-	url = git://github.com/docunext/closetag.vim.git
 [submodule "vim/bundle/molokai"]
 	path = vim/bundle/molokai
 	url = git@github.com:tomasr/molokai.git
 [submodule "vim/bundle/vim-airline"]
 	path = vim/bundle/vim-airline
 	url = git@github.com:bling/vim-airline.git
-[submodule "vim/bundle/delimitMate"]
-	path = vim/bundle/delimitMate
-	url = git@github.com:Raimondi/delimitMate.git
+[submodule "vim/bundle/distinguished"]
+	path = vim/bundle/distinguished
+	url = git@github.com:Lokaltog/vim-distinguished.git

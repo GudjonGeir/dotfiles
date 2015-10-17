@@ -6,25 +6,46 @@
 call pathogen#infect()
 call pathogen#helptags()
 
-" CloseTag - only load for aprropriate files
-autocmd FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
-autocmd FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako source ~/.vim/bundle/closetag/plugin/closetag.vim
-
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
-
-" Netrw
-" Prevent netrw from saving history and bookmarks
-let g:netrw_dirhistmax = 0
-
 " ********************
 " Theme settings
 " ********************
-colorscheme molokai
+set t_Co=256
 set background=dark
-let g:molokai_original = 0
+colorscheme distinguished
+
+" ********************
+" Key mappings
+" ********************
+
+" Rolling from j to k equals ESCAPE
+inoremap jk <ESC>
+
+let mapleader = "\<Space>"
+
+" Map ctrl+movement keys to ctrl+w followed by the movement key.
+" Makes switching between split windows extremely simple.
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-H> <C-W>h
+map <C-L> <C-W>l
+" Map alt+movement keys to ctrl+w followed by the movement key.
+" Makes moving windows much simpler.
+map ∆ <C-W>J
+map ˚ <C-W>K
+map ˙ <C-W>H
+map ¬ <C-W>L
+" Map arrow keys to window resize commands.
+map <Right> 5<C-W>>
+map <Left> 5<C-W><
+map <Up> 5<C-W>+
+map <Down> 5<C-W>-
+
+" When pressing enter it will also run :noh to turn off highlights from previous search.
+nnoremap <CR> :noh<CR>
 
 
 " ********************
@@ -33,9 +54,6 @@ let g:molokai_original = 0
 
 " Make Vim more useful
 set nocompatible
-
-" Change mapleader
-let mapleader=","
 
 " Enable line numbers
 set number
@@ -72,32 +90,12 @@ set hlsearch
 set ignorecase
 " ...unless there's a capital letter in the query
 set smartcase
-" turn off search highlight
-nnoremap <leader><space> :nohlsearch<CR>
 
-
-" Key mappings
 " ********************
-" Map ctrl+movement keys to ctrl+w followed by the movement key.
-" Makes switching between split windows extremely simple.
-map <C-J> <C-W>j
-map <C-K> <C-W>k
-map <C-H> <C-W>h
-map <C-L> <C-W>l
-" Map alt+movement keys to ctrl+w followed by the movement key.
-" Makes moving windows much simpler.
-map ∆ <C-W>J
-map ˚ <C-W>K
-map ˙ <C-W>H
-map ¬ <C-W>L
-" Map arrow keys to window resize commands.
-map <Right> 5<C-W>>
-map <Left> 5<C-W><
-map <Up> 5<C-W>+
-map <Down> 5<C-W>-
+" Encoding
+" ********************
+set encoding=utf-8
 
-" When pressing enter it will also run :noh to turn off highlights from previous search.
-nnoremap <CR> :noh<CR>
 
 
 
