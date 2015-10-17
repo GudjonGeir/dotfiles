@@ -15,7 +15,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 " ********************
 set t_Co=256
 set background=dark
-colorscheme distinguished
+colorscheme seti
 
 " ********************
 " Key mappings
