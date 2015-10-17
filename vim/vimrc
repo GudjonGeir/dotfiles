@@ -10,6 +10,13 @@ call pathogen#helptags()
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
+" Ctrl+n toggles NerdTree
+map <C-n> :NERDTreeToggle<CR>
+
+" Opens NerdTree automatically when vim starts up and no files were specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
 " ********************
 " Theme settings
 " ********************
