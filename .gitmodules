@@ -7,3 +7,6 @@
 [submodule "vim/bundle/distinguished"]
 	path = vim/bundle/distinguished
 	url = git@github.com:Lokaltog/vim-distinguished.git
+[submodule "vim/bundle/seti"]
+	path = vim/bundle/seti
+	url = git@github.com:trusktr/seti.vim.git
