@@ -19,3 +19,6 @@
 [submodule "vim/bundle/vim-javascript"]
 	path = vim/bundle/vim-javascript
 	url = git@github.com:pangloss/vim-javascript.git
+[submodule "vim/bundle/delmitmate"]
+	path = vim/bundle/delmitmate
+	url = git://github.com/Raimondi/delimitMate.git

@@ -9,3 +9,5 @@
 	df = diff
 	undo = reset --hard HEAD~1
 
+[push]
+	default = simple
