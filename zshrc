@@ -1,74 +1,116 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="miloshadzic"
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/ggj/.oh-my-zsh"
 
-# Example aliases
-alias zshconfig="mvim ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias gvim="mvim"
-alias vim="mvim"
-export EDITOR="mvim -v -g --remote-tab-silent"
-export GIT_EDITOR="vi"
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# ZSH_THEME="miloshadzic"
+# ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel9k/powerlevel9k"
+POWERLEVEL9K_MODE="nerdfont-complete"
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir_writable dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status kubecontext command_execution_time root_indicator)
+#POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+#POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+#POWERLEVEL9K_USER_ICON="\uF415" # 
+POWERLEVEL9K_ROOT_ICON="\uF09C"
+#POWERLEVEL9K_SUDO_ICON=$'\uF09C' # 
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
+#POWERLEVEL9K_VCS_GIT_ICON='\uF408 '
+#POWERLEVEL9K_VCS_GIT_GITHUB_ICON='\uF408 '
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+#POWERLEVEL9K_VCS_SHORTEN_MIN_LENGTH=16
+#POWERLEVEL9K_VCS_SHORTEN_STRATEGY="truncate_from_right"
+POWERLEVEL9K_VCS_SHORTEN_LENGTH=16
+POWERLEVEL9K_VCS_SHORTEN_MIN_LENGTH=16
+POWERLEVEL9K_VCS_SHORTEN_STRATEGY="truncate_from_right"
+POWERLEVEL9K_VCS_SHORTEN_DELIMITER=".."
+
+# Set list of themes to load
+# Setting this variable when ZSH_THEME=random
+# cause zsh load theme from this variable instead of
+# looking in ~/.oh-my-zsh/themes/
+# An empty array have no effect
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# ALIASES
+alias gvim="nvim"
+alias vim="nvim"
+alias vi="nvim"
+alias emacs='/usr/local/Cellar/emacs-plus/26.2/Emacs.app/Contents/MacOS/Emacs -nw'
+# export EDITOR="nvim"
+# export GIT_EDITOR="emacs"
 
 alias la="ls -a"
 
-#copy output of last command to clipboard
-alias cl="fc -e -|pbcopy"
-# copy the working directory path
-alias cpwd='pwd|tr -d "\n"|pbcopy'
-
-# Python aliases
-#alias python="python3"
-#alias python2="python"
+alias pants_test_changed="./pants test --changed-parent=origin/master --changed-include-dependees=transitive"
 
 
-# Set to this to use case-sensitive completion
+# Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Uncomment this to disable bi-weekly auto-update checks
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
-# Uncomment to change how often before auto-updates occur? (in days)
+# Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
 
-# Uncomment following line if you want to disable colors in ls
+# Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
-# Uncomment following line if you want to disable command autocorrection
-# DISABLE_CORRECTION="true"
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
+# Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
 
-# Uncomment following line if you want to disable marking untracked files under
-# VCS as dirty. This makes repository status check for large repositories much,
-# much faster.
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment following line if you want to  shown in the command execution time stamp 
-# in the history command output. The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|
-# yyyy-mm-dd
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+  git
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbi:/usr/sbin
 # export MANPATH="/usr/local/man:$MANPATH"
 
-# # Preferred editor for local and remote sessions
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
@@ -79,25 +121,63 @@ export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbi:/usr/sbin
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+export NODE_HOME="/Users/ggj/.apps/node-v8.11.4-darwin-x64"
+export JAVA_HOME="/Users/ggj/.apps/jdk180181"
+
+export PATH="/usr/local/bin:$PATH"
+export PATH="$NODE_HOME/bin:$PATH"
+export PATH="$JAVA_HOME/bin:$PATH"
 
 
-#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
 
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+aws_vikingprod() {
+    export AWS_PROFILE=viking_prod
+    export AWS_REGION=eu-west-1
+    export AWS_DEFAULT_REGION=$AWS_REGION
+}
 
-### Gradle installation
-export GRADLE_HOME="/Users/GGJ/Installations/gradle-2.2.1"
-export PATH="$PATH:$GRADLE_HOME/bin"
+aws_vikingdev() {
+    export AWS_PROFILE=viking_dev
+    export AWS_REGION=eu-west-1
+    export AWS_DEFAULT_REGION=$AWS_REGION
+}
 
-[ -s "/Users/GGJ/.dnx/dnvm/dnvm.sh" ] && . "/Users/GGJ/.dnx/dnvm/dnvm.sh" # Load dnvm
+aws_vikingstaging() {
+    export AWS_PROFILE=viking_dev
+    export AWS_REGION=us-east-1
+    export AWS_DEFAULT_REGION=$AWS_REGION
+}
 
-### ASP.NET 5
-source ~/.dnx/dnvm/dnvm.sh
-export MONO_MANAGED_WATCHER=disabled
-code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
-### nvm
-. ~/.nvm/nvm.sh
+aws_none() {
+    unset AWS_PROFILE AWS_REGION AWS_DEFAULT_REGION
+}
+
+
+alias k8_dev="kubectl config use-context k8s.dev.sothelabs.com"
+alias k8_prod="kubectl config use-context k8s.prod.sothelabs.com"
+alias k8_staging="kubectl config use-context k8s.staging.sothelabs.com"
+alias k8_internal="kubectl config use-context k8s.internal.sothelabs.com"
+alias k8_test="kubectl config use-context k8s.test.sothelabs.com"
+
+# opam configuration
+test -r /Users/ggj/.opam/opam-init/init.zsh && . /Users/ggj/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
