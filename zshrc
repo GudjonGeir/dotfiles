@@ -131,13 +131,15 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export NODE_HOME="/Users/ggj/.apps/node-v8.11.4-darwin-x64"
-export JAVA_HOME="/Users/ggj/.apps/jdk180181"
+export NODE_HOME="/Users/ggj/.apps/node-v10.16.2-darwin-x64"
+export JAVA_HOME="/Users/ggj/.apps/jdk180221"
+export GO_HOME="/usr/local/go"
 
 export PATH="/usr/local/bin:$PATH"
 export PATH="$NODE_HOME/bin:$PATH"
 export PATH="$JAVA_HOME/bin:$PATH"
-
+export PATH="$GO_HOME/bin:$PATH"
+export PATH="$(pyenv root)/shims:$PATH"
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
