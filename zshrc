@@ -41,7 +41,7 @@ POWERLEVEL9K_VCS_SHORTEN_DELIMITER=".."
 alias gvim="nvim"
 alias vim="nvim"
 alias vi="nvim"
-alias emacs='/usr/local/Cellar/emacs-plus/26.2/Emacs.app/Contents/MacOS/Emacs -nw'
+# alias emacs='/usr/local/Cellar/emacs-plus/26.2/Emacs.app/Contents/MacOS/Emacs -nw'
 # export EDITOR="nvim"
 # export GIT_EDITOR="emacs"
 

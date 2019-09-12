@@ -57,7 +57,7 @@ This function should only modify configuration layer settings."
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      treemacs
-     ;; version-control
+     version-control
      )
 
    ;; List of additional packages that will be installed without being
@@ -67,7 +67,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(centaur-tabs)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -208,7 +208,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '("Fira Mono"
                                :size 13
                                :weight normal
                                :width normal)
@@ -532,6 +532,15 @@ before packages are loaded."
                          (magit-get-push-remote)
                          "url"))
              (magit-get-current-branch))))
+
+
+  (use-package centaur-tabs
+    :demand
+    :config
+    (centaur-tabs-mode t)
+    :bind
+    ("C-<prior>" . centaur-tabs-backward)
+    ("C-<next>" . centaur-tabs-forward))
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
