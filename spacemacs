@@ -461,6 +461,8 @@ before packages are loaded."
   (setq make-backup-files nil)
   (setq create-lockfiles nil)
   
+
+  ;; ===================== ReasonML ====================
   (defun shell-cmd (cmd)
     "Returns the stdout output of a shell command or nil if the command returned
    an error"
@@ -482,9 +484,58 @@ before packages are loaded."
       (setq refmt-command refmt-bin)))
   ;; (setq refmt-command 'npm)
 
-  (add-hook 'term-mode-hook
-            (defun my-term-mode-hook ()
-	            (setq bidi-paragraph-direction 'left-to-right)))
+  ;; (add-hook 'term-mode-hook
+  ;;           (defun my-term-mode-hook ()
+	;;             (setq bidi-paragraph-direction 'left-to-right)))
+
+  (defun arnarthor/compile ()
+    (interactive)
+    (with-output-to-temp-buffer "*bucklescript*"
+      (async-shell-command (concat
+                            "cd $(git rev-parse --show-toplevel)/src/yarn"
+                            " && "
+                            "yarn build-with-logs")
+                           "*bucklescript*"
+                           "*bucklescript*")))
+  (spacemacs/set-leader-keys-for-major-mode 'reason-mode
+    "c b" 'arnarthor/compile)
+
+  (defun arnarthor/clean ()
+    (interactive)
+    (with-output-to-temp-buffer "*bucklescript*"
+      (async-shell-command (concat
+                            "cd $(git rev-parse --show-toplevel)/src/yarn"
+                            " && "
+                            "yarn clean")
+                           "*bucklescript*"
+                           "*bucklescript*")))
+  (spacemacs/set-leader-keys-for-major-mode 'reason-mode
+    "c c" 'arnarthor/clean)
+
+  (defun arnarthor/jest-this-file ()
+    (interactive)
+    (with-output-to-temp-buffer "*jest*"
+      (async-shell-command (concat
+                            "yarn jest"
+                            " "
+                            (expand-file-name
+                             (string-remove-suffix ".re" buffer-file-name)))
+                           "*jest*"
+                           "*jest*")))
+  (spacemacs/set-leader-keys-for-major-mode 'reason-mode
+    "t f" 'arnarthor/jest-this-file)
+
+  (defun arnarthor/jest-project ()
+    (interactive)
+    (with-output-to-temp-buffer "*jest*"
+      (async-shell-command  "yarn jest"
+                            "*jest*"
+                            "*jest*")))
+  (spacemacs/set-leader-keys-for-major-mode 'reason-mode
+    "t p" 'arnarthor/jest-project)
+
+
+  ;; ==================== /Reason ====================
 
   (defun copy-to-clipboard ()
   "Copies selection to x-clipboard."
