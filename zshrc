@@ -1,3 +1,4 @@
+export TERM="xterm-256color"
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -36,6 +37,9 @@ POWERLEVEL9K_VCS_SHORTEN_DELIMITER=".."
 # looking in ~/.oh-my-zsh/themes/
 # An empty array have no effect
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Import private configs
+source ~/.zshrc.private
 
 # ALIASES
 alias gvim="nvim"
@@ -131,7 +135,11 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+
+
 export NODE_HOME="/Users/ggj/.apps/node-v10.16.2-darwin-x64"
+export NODE_MODULES="node_modules/.bin"
 export JAVA_HOME="/Users/ggj/.apps/jdk180221"
 export GO_HOME="/usr/local/go"
 
@@ -139,16 +147,14 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="$NODE_HOME/bin:$PATH"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$GO_HOME/bin:$PATH"
-export PATH="$(pyenv root)/shims:$PATH"
+#export PATH="$(pyenv root)/shims:$PATH"
+export PATH="$NODE_MODULES:$PATH"
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
 
 
 aws_vikingprod() {
@@ -183,3 +189,8 @@ alias k8_test="kubectl config use-context k8s.test.sothelabs.com"
 
 # opam configuration
 test -r /Users/ggj/.opam/opam-init/init.zsh && . /Users/ggj/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+ eval "$(pyenv init -)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
