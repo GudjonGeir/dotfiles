@@ -30,6 +30,7 @@ let g:which_key_map['g'] = {
       \ 'd' : 'fugitive-diff',
       \ 'e' : 'fugitive-edit',
       \ 'l' : 'fugitive-log',
+      \ 'm' : 'fugitive-move',
       \ 'r' : 'fugitive-read',
       \ 's' : 'fugitive-status',
       \ 'w' : 'fugitive-write',

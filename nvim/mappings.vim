@@ -28,6 +28,7 @@ nnoremap <leader>gC :Gcommit<cr>
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>ge :Gedit<cr>
 nnoremap <leader>gl :Glog<cr>
+nnoremap <leader>gm :exec ":Gmove! ".input("New location: ")<cr>
 nnoremap <leader>gr :Gread<cr>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gw :Gwrite<cr>
