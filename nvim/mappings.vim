@@ -9,10 +9,22 @@ let mapleader = " "
 let maplocalleader = ","
 
 " Bind leader (space) p to start Ctrl+p in normal mode.
-"nnoremap <leader><space> 
+"nnoremap <leader><space>
 
 nnoremap <silent> <leader><space> :WhichKey '<Space>'<CR>
 nnoremap <silent> <localleader>, :WhichKey ','<CR>
+
+nnoremap <leader>bd :BD<cr>
+nnoremap <leader>bf :bfirst<cr>
+nnoremap <leader>bl :blast<cr>
+nnoremap <leader>bn :bn<cr>
+nnoremap <leader>bp :bp<cr>
+nnoremap <leader>bb :call fzf#vim#buffers()<CR>
+nnoremap <leader>bx :bd<cr>
+
+nmap <leader>cl <Plug>CommentaryLine
+vmap <leader>cl <Plug>Commentary
+nmap <leader>cp gcip<cr>
 
 nnoremap <leader>wsh :sp<cr>
 nnoremap <leader>wsv :vsp<cr>
@@ -32,7 +44,6 @@ nnoremap <leader>ftf :NERDTreeFind<cr>
 " nnoremap <leader>pf :CtrlP<CR>
 " nnoremap <leader>pb :CtrlPBuffer<CR>
 nnoremap <leader>pf :call fzf#vim#gitfiles('--cached --exclude-standard --others', fzf#vim#with_preview('right'))<CR>
-nnoremap <leader>pb :call fzf#vim#buffers()<CR>
 
 nnoremap <leader>tr :set relative!<cr>
 nnoremap <leader>tn :set number!<cr>

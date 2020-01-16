@@ -5,6 +5,23 @@ let g:which_key_map_local =  {}
 
 let g:which_key_map =  {}
 
+let g:which_key_map.b = {
+       \ 'name' : '+buffer' ,
+       \ 'd' : 'delete-buffer',
+       \ 'f' : 'first-buffer',
+       \ 'l' : 'last-buffer',
+       \ 'n' : 'next-buffer',
+       \ 'p' : 'previous-buffer',
+       \ 'b' : 'fzf-buffer',
+       \ 'x' : 'delete-buffer-and-window',
+       \ }
+
+let g:which_key_map['c'] = {
+      \ 'name' : '+comments' ,
+      \ 'l' : 'comment-or-uncomment-lines',
+      \ 'p' : 'comment-or-uncomment-paragraph',
+      \ }
+
 let g:which_key_map.w = { 'name' : '+window' }
 let g:which_key_map.w.s = { 'name' : '+split' }
 
@@ -16,8 +33,8 @@ let g:which_key_map.f.e = { 'name' : '+environment' }
 let g:which_key_map.f.e.e = 'vimrc'
 let g:which_key_map.f.e.r = 'reload'
 let g:which_key_map.p = { 'name' : '+ctrlp' }
-let g:which_key_map.p.b = "buffers" 
-let g:which_key_map.p.f = "files" 
+let g:which_key_map.p.b = "buffers"
+let g:which_key_map.p.f = "files"
 "call which_key#register('<Space>', "g:which_key_map")
 
 " Configuration ctrlP
