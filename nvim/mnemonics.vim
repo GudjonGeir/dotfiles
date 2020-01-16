@@ -22,6 +22,20 @@ let g:which_key_map['c'] = {
       \ 'p' : 'comment-or-uncomment-paragraph',
       \ }
 
+let g:which_key_map['g'] = {
+      \ 'name' : '+git/version-control' ,
+      \ 'b' : 'fugitive-blame',
+      \ 'c' : 'commits-for-current-buffer',
+      \ 'C' : 'fugitive-commit',
+      \ 'd' : 'fugitive-diff',
+      \ 'e' : 'fugitive-edit',
+      \ 'l' : 'fugitive-log',
+      \ 'r' : 'fugitive-read',
+      \ 's' : 'fugitive-status',
+      \ 'w' : 'fugitive-write',
+      \ 'p' : 'fugitive-push',
+      \ }
+
 let g:which_key_map.w = { 'name' : '+window' }
 let g:which_key_map.w.s = { 'name' : '+split' }
 

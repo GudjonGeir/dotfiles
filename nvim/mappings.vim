@@ -22,6 +22,17 @@ nnoremap <leader>bp :bp<cr>
 nnoremap <leader>bb :call fzf#vim#buffers()<CR>
 nnoremap <leader>bx :bd<cr>
 
+nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gc :BCommits<cr>
+nnoremap <leader>gC :Gcommit<cr>
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>ge :Gedit<cr>
+nnoremap <leader>gl :Glog<cr>
+nnoremap <leader>gr :Gread<cr>
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gw :Gwrite<cr>
+nnoremap <leader>gp :Gpush<cr>
+
 nmap <leader>cl <Plug>CommentaryLine
 vmap <leader>cl <Plug>Commentary
 nmap <leader>cp gcip<cr>
