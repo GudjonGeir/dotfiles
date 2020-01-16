@@ -31,7 +31,8 @@ nnoremap <leader>gl :Glog<cr>
 nnoremap <leader>gr :Gread<cr>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gw :Gwrite<cr>
-nnoremap <leader>gp :Gpush<cr>
+nnoremap <leader>gp :Gpull<cr>
+nnoremap <leader>gP :Gpush<cr>
 
 nmap <leader>cl <Plug>CommentaryLine
 vmap <leader>cl <Plug>Commentary

@@ -33,7 +33,8 @@ let g:which_key_map['g'] = {
       \ 'r' : 'fugitive-read',
       \ 's' : 'fugitive-status',
       \ 'w' : 'fugitive-write',
-      \ 'p' : 'fugitive-push',
+      \ 'p' : 'fugitive-pull',
+      \ 'P' : 'fugitive-push',
       \ }
 
 let g:which_key_map.w = { 'name' : '+window' }
