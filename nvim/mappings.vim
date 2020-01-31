@@ -57,6 +57,14 @@ nnoremap <leader>ftf :NERDTreeFind<cr>
 " nnoremap <leader>pf :CtrlP<CR>
 " nnoremap <leader>pb :CtrlPBuffer<CR>
 nnoremap <leader>pf :call fzf#vim#gitfiles('--cached --exclude-standard --others', fzf#vim#with_preview('right'))<CR>
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+nnoremap <leader>/ :Rg<cr>
+nnoremap <leader>* :Rg <c-r>=expand("<cword>")<cr><cr>
+" nnoremap <leader>/ :call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<c-r>=expand("<cword>")<cr>), 1, fzf#vim#with_preview(), <bang>0)<cr>
+
 
 nnoremap <leader>tr :set relative!<cr>
 nnoremap <leader>tn :set number!<cr>

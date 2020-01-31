@@ -49,7 +49,6 @@ let g:which_key_map.f.e = { 'name' : '+environment' }
 let g:which_key_map.f.e.e = 'vimrc'
 let g:which_key_map.f.e.r = 'reload'
 let g:which_key_map.p = { 'name' : '+ctrlp' }
-let g:which_key_map.p.b = "buffers"
 let g:which_key_map.p.f = "files"
 "call which_key#register('<Space>', "g:which_key_map")
 
