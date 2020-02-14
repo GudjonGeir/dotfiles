@@ -13,8 +13,8 @@ augroup Reason
 "  autocmd FileType reason nnoremap <localleader>ht :call LanguageClient#textDocument_hover()<cr>
 "  autocmd FileType reason nnoremap <localleader>rr :call LanguageClient_textDocument_rename()<cr>
 
-  autocmd FileType reason nnoremap <localleader>gg :MerlinLocate<cr>
-  autocmd FileType reason nnoremap <localleader>== :ReasonPrettyPrint<Cr>
-  " autocmd bufwritepost *.re silent !standard % --format
-  autocmd FileType reason autocmd BufWritePre <buffer> :ReasonPrettyPrint
+  " autocmd FileType reason nnoremap <localleader>gg :MerlinLocate<cr>
+  " autocmd FileType reason nnoremap <localleader>== :ReasonPrettyPrint<Cr>
+  " " autocmd bufwritepost *.re silent !standard % --format
+  " autocmd FileType reason autocmd BufWritePre <buffer> :ReasonPrettyPrint
 augroup END
