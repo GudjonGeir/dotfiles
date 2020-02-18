@@ -34,6 +34,7 @@ nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gw :Gwrite<cr>
 nnoremap <leader>gp :Gpull<cr>
 nnoremap <leader>gP :Gpush<cr>
+nnoremap <leader>gg :call Lazygit()<cr>
 
 nmap <leader>cl <Plug>CommentaryLine
 vmap <leader>cl <Plug>Commentary
@@ -66,7 +67,7 @@ nnoremap <leader>* :Rg <c-r>=expand("<cword>")<cr><cr>
 " nnoremap <leader>/ :call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<c-r>=expand("<cword>")<cr>), 1, fzf#vim#with_preview(), <bang>0)<cr>
 
 
-nnoremap <leader>tr :set relative!<cr>
+nnoremap <leader>tr :set relativenumber!<cr>
 nnoremap <leader>tn :set number!<cr>
 
 nnoremap <leader>sn :noh<cr>

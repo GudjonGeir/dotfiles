@@ -7,7 +7,7 @@ set hidden
 set notimeout
 set number
 set numberwidth=4
-set relativenumber
+" set relativenumber
 set wrap
 set autoindent
 set lcs=trail:·,tab:»·
