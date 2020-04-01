@@ -35,6 +35,9 @@ nnoremap <leader>gw :Gwrite<cr>
 nnoremap <leader>gp :Gpull<cr>
 nnoremap <leader>gP :Gpush<cr>
 nnoremap <leader>gg :call Lazygit()<cr>
+nnoremap <leader>gt :GitGutterToggle<cr>
+nnoremap <leader>ghp :GitGutterPrevHunk<cr>
+nnoremap <leader>ghn :GitGutterNextHunk<cr>
 
 nmap <leader>cl <Plug>CommentaryLine
 vmap <leader>cl <Plug>Commentary

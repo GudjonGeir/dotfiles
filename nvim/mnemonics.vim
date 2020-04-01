@@ -36,6 +36,12 @@ let g:which_key_map['g'] = {
       \ 'w' : 'fugitive-write',
       \ 'p' : 'fugitive-pull',
       \ 'P' : 'fugitive-push',
+      \ 't' : 'toggle-gutter',
+      \ 'h' : {
+           \ 'name' : '+hunks',
+           \ 'n' : 'next',
+           \ 'p' : 'prev',
+           \}
       \ }
 
 let g:which_key_map.w = { 'name' : '+window' }

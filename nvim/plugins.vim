@@ -7,6 +7,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'liuchengxu/vim-which-key'
 Plug 'qpkorr/vim-bufkill'
 
@@ -88,7 +89,9 @@ call plug#end()
 " endfor
 " ## end of OPAM user-setup addition for vim / base ## keep this line
 
-
+set updatetime=100
+let g:gitgutter_override_sign_column_highlight = 0
+let g:gitgutter_map_keys = 0
 
 
 " FZF {{{
