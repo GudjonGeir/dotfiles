@@ -1,6 +1,9 @@
 syntax on
+
+let g:edge_style = 'aura'
+set termguicolors
 set background=dark
-colorscheme plastic
+colorscheme edge
 
 set history=10000
 set hidden
@@ -16,7 +19,6 @@ set autoread
 set backspace=eol,start,indent
 set encoding=utf-8
 set fileencoding=utf-8
-set termguicolors
 set mouse=a
 set lazyredraw
 set expandtab
@@ -42,7 +44,7 @@ let g:NERDTreeHijackNetrw=0
 
 "" Configure Airline
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='deus'
+let g:airline_theme='edge'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#formatter = 'default'

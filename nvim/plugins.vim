@@ -1,7 +1,5 @@
 call plug#begin('~/.vim/plugged')
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'ayu-theme/ayu-vim'
-Plug 'flrnd/plastic.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
@@ -16,6 +14,11 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'voldikss/vim-floaterm'
 
+" Colorschemes
+Plug 'ayu-theme/ayu-vim'
+Plug 'flrnd/plastic.vim'
+Plug 'gryf/wombat256grf'
+Plug 'sainnhe/edge'
 " Plug 'reasonml-editor/vim-reason'
 " Plug 'neomake/neomake'
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
