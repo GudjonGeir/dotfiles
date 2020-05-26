@@ -45,7 +45,7 @@ This function should only modify configuration layer settings."
      ;; better-defaults
      emacs-lisp
      git
-     ;;helm
+     ;; helm
      ivy
      ;; ocaml
      (reasonml :variables reason-auto-refmt t)
@@ -200,7 +200,12 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(smyx
+   dotspacemacs-themes '(kaolin-aurora
+                         dracula
+                         smyx
+                         doom-nord
+                         spacemacs-dark
+                         wombat
                          spacegray)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -217,7 +222,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-colorize-cursor-according-to-state t
 
    ;; Default font or prioritized list of fonts.
-   dotspacemacs-default-font '("Fira Mono"
+   dotspacemacs-default-font '("Source Code Pro"
                                :size 13
                                :weight normal
                                :width normal)
