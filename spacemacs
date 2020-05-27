@@ -515,6 +515,30 @@ before packages are loaded."
 
   ;; ===================== /ReasonML ====================
 
+  ;; ===================== org-mode ====================
+
+  (with-eval-after-load 'org
+
+    (setq org-agenda-files '("~/gtd/inbox.org"
+                             "~/gtd/gtd.org"
+                             "~/gtd/tickler.org"))
+
+    (setq org-capture-templates '(("t" "Todo [inbox]" entry
+                                   (file+headline "~/gtd/inbox.org" "Tasks")
+                                   "* TODO %i%?")
+                                  ("T" "Tickler" entry
+                                   (file+headline "~/gtd/tickler.org" "Tickler")
+                                   "* %i%? \n %U")))
+
+    (setq org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 3)
+                               ("~/gtd/someday.org" :level . 1)
+                               ("~/gtd/tickler.org" :maxlevel . 2)))
+
+    (add-to-list 'org-modules 'org-habit t)
+  )
+
+  ;; ===================== /org-mode ====================
+
   (defun endless/visit-pull-request-url ()
     "Visit the current branch's PR on Github."
     (interactive)
