@@ -50,6 +50,9 @@ This function should only modify configuration layer settings."
      ;; ocaml
      (reasonml :variables reason-auto-refmt t)
      ;; markdown
+     (typescript :variables
+                 typescript-fmt-on-save t
+                 typescript-fmt-tool 'typescript-formatter)
      multiple-cursors
      org
      ;; (shell :variables
