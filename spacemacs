@@ -523,7 +523,7 @@ before packages are loaded."
   ;; ===================== /ReasonML ====================
 
   ;; ===================== org-mode ====================
-
+  (require 'org-protocol)
   (with-eval-after-load 'org
 
     (setq org-agenda-files '("~/gtd/inbox.org"
@@ -535,12 +535,18 @@ before packages are loaded."
                                    "* TODO %i%?")
                                   ("T" "Tickler" entry
                                    (file+headline "~/gtd/tickler.org" "Tickler")
-                                   "* %i%? \n %U")))
+                                   "* %i%? \n %U")
+                                  ("p" "org-protocol" entry
+                                   (file+headline "~/gtd/inbox.org" "Tasks")
+                                   "* TODO %:description\n  %:link\n\n  %i"
+                                   )
+                                  ))
 
     (setq org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 3)
                                ("~/gtd/someday.org" :level . 1)
                                ("~/gtd/tickler.org" :maxlevel . 2)))
 
+    (add-to-list 'org-modules 'org-protocol)
     (add-to-list 'org-modules 'org-habit t)
   )
 
