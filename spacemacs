@@ -49,12 +49,15 @@ This function should only modify configuration layer settings."
      ivy
      ;; ocaml
      (reasonml :variables reason-auto-refmt t)
-     ;; markdown
      (typescript :variables
                  typescript-fmt-on-save t
                  typescript-fmt-tool 'typescript-formatter)
+     markdown
      multiple-cursors
-     org
+     (org :variables
+          org-enable-github-support t
+          org-enable-jira-support t
+          jiralib-url "https://sothebys.jira.com")
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -203,13 +206,14 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(kaolin-aurora
+   dotspacemacs-themes '(spacegray
+                         kaolin-aurora
                          dracula
                          smyx
                          doom-nord
                          spacemacs-dark
                          wombat
-                         spacegray)
+                         )
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
