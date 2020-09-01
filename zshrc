@@ -141,7 +141,8 @@ export PATH="$NODE_HOME/bin:$PATH"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$GO_HOME/bin:$PATH"
 #export PATH="$(pyenv root)/shims:$PATH"
-export PATH="$NODE_MODULES:$PATH"
+# export PATH="$NODE_MODULES:$PATH"
+export PATH="/usr/local/opt/terraform@0.11/bin:$PATH"
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
@@ -166,6 +167,12 @@ aws_vikingstaging() {
     export AWS_PROFILE=viking_dev
     export AWS_REGION=us-east-1
     export AWS_DEFAULT_REGION=$AWS_REGION
+    export AWS_ACCOUNT_ID=654509864008
+    aws ecr get-login-password \
+        --region $AWS_REGION \
+        | docker login \
+        --username AWS \
+        --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
 }
 
 
