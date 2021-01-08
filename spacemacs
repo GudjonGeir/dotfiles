@@ -51,7 +51,9 @@ This function should only modify configuration layer settings."
      (reasonml :variables reason-auto-refmt t)
      (typescript :variables
                  typescript-fmt-on-save t
-                 typescript-fmt-tool 'typescript-formatter)
+                 typescript-fmt-tool 'prettier
+                 typescript-linter 'eslint)
+     react
      markdown
      multiple-cursors
      (org :variables
@@ -206,7 +208,12 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacegray
+   dotspacemacs-themes '(doom-city-lights
+                         doom-snazzy
+                         doom-nova
+                         doom-tomorrow-night
+                         doom-spacegrey
+                         spacegray
                          kaolin-aurora
                          dracula
                          smyx
@@ -222,7 +229,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(vim-powerline :separator arrow :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(spacemacs :separator arrow :separator-scale 1.5)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
