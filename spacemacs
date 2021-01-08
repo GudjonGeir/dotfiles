@@ -536,26 +536,77 @@ before packages are loaded."
     (setq org-agenda-files '("~/gtd/inbox.org"
                              "~/gtd/gtd.org"
                              "~/gtd/tickler.org"))
+    (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
     (setq org-capture-templates '(("t" "Todo [inbox]" entry
-                                   (file+headline "~/gtd/inbox.org" "Tasks")
+                                   (file "~/gtd/inbox.org")
                                    "* TODO %i%?")
                                   ("T" "Tickler" entry
-                                   (file+headline "~/gtd/tickler.org" "Tickler")
+                                   (file "~/gtd/tickler.org")
                                    "* %i%? \n %U")
                                   ("p" "org-protocol" entry
-                                   (file+headline "~/gtd/inbox.org" "Tasks")
+                                   (file "~/gtd/inbox.org")
                                    "* TODO %:description\n  %:link\n\n  %i"
                                    )
                                   ))
 
     (setq org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 3)
-                               ("~/gtd/someday.org" :level . 1)
+                               ("~/gtd/someday.org" :maxlevel . 1)
                                ("~/gtd/tickler.org" :maxlevel . 2)))
 
     (add-to-list 'org-modules 'org-protocol)
     (add-to-list 'org-modules 'org-habit t)
   )
+
+  (setq org-agenda-custom-commands 
+    '(
+      ("c" "At computer" tags-todo "@computer"
+        ((org-agenda-overriding-header "Computer")
+        (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+      ("h" "At home" tags-todo "@home"
+        ((org-agenda-overriding-header "Home")
+        (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+      ("w" "At work" tags-todo "@work"
+        ((org-agenda-overriding-header "Work")
+        (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+      ("e" "Errands" tags-todo "@errands"
+        ((org-agenda-overriding-header "Errands")
+        (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+      ("a" "Anywhere" tags-todo "@anywhere"
+        ((org-agenda-overriding-header "Anywhere")
+        (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+      ("A" "Agendas" tags-todo "@agendas"
+        ((org-agenda-overriding-header "Agendas")
+        (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+      ("C" "Calls" tags-todo "@call"
+        ((org-agenda-overriding-header "Calls")
+        (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+      ("W" "Watch" tags-todo "@watch"
+        ((org-agenda-overriding-header "Watch")
+        (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+      ("r" "Read" tags-todo "@read"
+        ((org-agenda-overriding-header "Read")
+        (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+      ("T" "List TODOs grouped by category" alltodo ""
+        ((org-agenda-overriding-header "All TODOs")
+        (org-agenda-sorting-strategy '(tag-up category-up priority-down))))
+      ))
+
+  (defun my-org-agenda-skip-all-siblings-but-first ()
+    "Skip all but first project actions."
+    (let (should-skip-entry)
+      (unless (org-current-is-todo)
+        (setq should-skip-entry t))
+      (save-excursion
+        (while (and (not should-skip-entry) (org-goto-sibling t))
+          (when (and (org-current-is-todo) (< 2 (org-current-level)))
+            (setq should-skip-entry t))))
+      (when should-skip-entry
+        (or (outline-next-heading)
+            (goto-char (point-max))))))
+
+  (defun org-current-is-todo ()
+    (string= "TODO" (org-get-todo-state)))
 
   ;; ===================== /org-mode ====================
 
