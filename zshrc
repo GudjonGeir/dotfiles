@@ -131,15 +131,17 @@ source $ZSH/oh-my-zsh.sh
 #
 
 
-export NODE_HOME="/Users/ggj/.apps/node-v10.16.2-darwin-x64"
+export NODE_HOME="/Users/ggj/.apps/node-v14.16.0-darwin-x64"
 export NODE_MODULES="node_modules/.bin"
-export JAVA_HOME="/Users/ggj/.apps/jdk180221"
+# export JAVA_HOME="/Users/ggj/.apps/jdk180221"
+export JAVA_HOME="/Users/ggj/.apps/jdk11.0.9"
 export GO_HOME="/usr/local/go"
 
 export PATH="/usr/local/bin:$PATH"
 export PATH="$NODE_HOME/bin:$PATH"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$GO_HOME/bin:$PATH"
+export PATH="/Users/ggj/go/bin:$PATH"
 #export PATH="$(pyenv root)/shims:$PATH"
 # export PATH="$NODE_MODULES:$PATH"
 export PATH="/usr/local/opt/terraform@0.11/bin:$PATH"
@@ -153,13 +155,25 @@ export LANG=en_US.UTF-8
 
 aws_vikingprod() {
     export AWS_PROFILE=viking_prod
-    export AWS_REGION=eu-west-1
+    export AWS_REGION=us-east-1
     export AWS_DEFAULT_REGION=$AWS_REGION
 }
 
 aws_vikingdev() {
     export AWS_PROFILE=viking_dev
     export AWS_REGION=eu-west-1
+    export AWS_DEFAULT_REGION=$AWS_REGION
+}
+
+aws_vikingbuild() {
+    export AWS_PROFILE=viking_build
+    export AWS_REGION=us-east-1
+    export AWS_DEFAULT_REGION=$AWS_REGION
+}
+
+aws_registrationprod() {
+    export AWS_PROFILE=registrationprod
+    export AWS_REGION=us-east-1
     export AWS_DEFAULT_REGION=$AWS_REGION
 }
 
@@ -181,11 +195,12 @@ aws_none() {
 }
 
 
-alias k8_dev="kubectl config use-context k8s.dev.sothelabs.com"
-alias k8_prod="kubectl config use-context k8s.prod.sothelabs.com"
-alias k8_staging="kubectl config use-context k8s.staging.sothelabs.com"
-alias k8_internal="kubectl config use-context k8s.internal.sothelabs.com"
-alias k8_test="kubectl config use-context k8s.test.sothelabs.com"
+# alias k8_dev="kubectl config use-context k8s.dev.sothelabs.com"
+# alias k8_prod="kubectl config use-context k8s.prod.sothelabs.com"
+# alias k8_staging="kubectl config use-context k8s.staging.sothelabs.com"
+# alias k8_internal="kubectl config use-context k8s.internal.sothelabs.com"
+# alias k8_test="kubectl config use-context k8s.test.sothelabs.com"
+. ~/code/ws-monorepo/tools/sh/k8
 
 # opam configuration
 test -r /Users/ggj/.opam/opam-init/init.zsh && . /Users/ggj/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
