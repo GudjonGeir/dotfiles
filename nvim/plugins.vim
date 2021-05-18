@@ -16,6 +16,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'voldikss/vim-floaterm'
 
 " Colorschemes
+Plug 'arcticicestudio/nord-vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'flrnd/plastic.vim'
 Plug 'gryf/wombat256grf'

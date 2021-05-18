@@ -3,7 +3,7 @@ syntax on
 let g:edge_style = 'aura'
 set termguicolors
 set background=dark
-colorscheme edge
+colorscheme nord
 
 set history=10000
 set hidden
@@ -51,7 +51,7 @@ let g:airline#extensions#tabline#formatter = 'default'
 let g:airline_powerline_fonts = 0
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-"let g:airline_theme='ayu'
+let g:airline_theme='ayu'
 
 
 "" Configure ctrlp
