@@ -1,5 +1,5 @@
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprevious<CR>
+" nnoremap <Tab> :bnext<CR>
+" nnoremap <S-Tab> :bprevious<CR>
 vnoremap <leader>k "+y<cr>
 
 " Bind leader space bar as the leader key for vim.
