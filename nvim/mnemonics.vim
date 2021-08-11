@@ -58,6 +58,20 @@ let g:which_key_map.p = { 'name' : '+ctrlp' }
 let g:which_key_map.p.f = "files"
 "call which_key#register('<Space>', "g:which_key_map")
 
-" Configuration ctrlP
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git$\'
+" LSP bindings
+" TODO: only do when lsp is loaded?
+let g:which_key_map.g = { 'name' : '+goto' }
+let g:which_key_map.g.g = { 'name' : '+LspDef' }
+let g:which_key_map.g.r = { 'name' : '+LspRefs' }
 
+let g:which_key_map.h = { 'name' : '+help' }
+let g:which_key_map.h.d = { 'name' : '+LspTypeDef' }
+let g:which_key_map.h.h = { 'name' : '+LspHover' }
+
+let g:which_key_map.r = { 'name' : '+refactor' }
+let g:which_key_map.r.r = { 'name' : '+LspRename' }
+let g:which_key_map.r.o = { 'name' : '+LspOrganize' }
+
+let g:which_key_map.d = { 'name' : '+diagnostic' }
+let g:which_key_map.d.n = { 'name' : '+LspDiagPrev' }
+let g:which_key_map.d.l = { 'name' : '+LspDiagLine' }
