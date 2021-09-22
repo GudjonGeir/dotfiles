@@ -3,7 +3,7 @@ export TERM="xterm-256color"
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/ggj/.oh-my-zsh"
+export ZSH="/$HOME/.oh-my-zsh"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -131,18 +131,21 @@ source $ZSH/oh-my-zsh.sh
 #
 
 
-export NODE_HOME="/Users/ggj/.apps/node-v14.16.0-darwin-x64"
+export NODE_HOME="$HOME/.apps/node-v14.17.5"
 export NODE_MODULES="node_modules/.bin"
-# export JAVA_HOME="/Users/ggj/.apps/jdk180221"
-export JAVA_HOME="/Users/ggj/.apps/jdk11.0.9"
+# export JAVA_HOME="/$HOME/.apps/jdk180221"
+# export JAVA_HOME="/$HOME/.apps/jdk11.0.9"
 export GO_HOME="/usr/local/go"
+export PYENV_ROOT="$HOME/.pyenv"
 
+export PATH="$HOME/local/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$NODE_HOME/bin:$PATH"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$GO_HOME/bin:$PATH"
-export PATH="/Users/ggj/go/bin:$PATH"
-#export PATH="$(pyenv root)/shims:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$(pyenv root)/shims:$PATH"
 # export PATH="$NODE_MODULES:$PATH"
 export PATH="/usr/local/opt/terraform@0.11/bin:$PATH"
 
@@ -203,7 +206,7 @@ aws_none() {
 . ~/code/ws-monorepo/tools/sh/k8
 
 # opam configuration
-test -r /Users/ggj/.opam/opam-init/init.zsh && . /Users/ggj/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+test -r /$HOME/.opam/opam-init/init.zsh && . /$HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
  eval "$(pyenv init -)"

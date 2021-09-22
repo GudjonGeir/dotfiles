@@ -39,12 +39,14 @@ ln -s "$PWD/gitconfig" ~/.gitconfig
 ln -s "$PWD/nvim" ~/.config/nvim
 
 if ask "Install awesome config"; then
-    rm ~/.config/awesome/rc.lua
+    rm -f ~/.config/awesome/rc.lua
+    mkdir -p ~/.config/awesome
     ln -s "$PWD/.config/awesome/rc.lua" ~/.config/awesome/rc.lua
 fi
 
 if ask "Install termite config"; then
-    rm ~/.config/termite/config
+    rm -f ~/.config/termite/config
+    mkdir -p ~/.config/termite
     ln -s "$PWD/.config/termite/config" ~/.config/termite/config
 fi
 
