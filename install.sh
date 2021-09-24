@@ -50,5 +50,11 @@ if ask "Install termite config"; then
     ln -s "$PWD/.config/termite/config" ~/.config/termite/config
 fi
 
+if ask "Install alacritty config"; then
+    rm -f ~/.config/alacritty/alacritty.yml
+    mkdir -p ~/.config/alacritty
+    ln -s "$PWD/.config/alacritty/alacritty.yml" ~/.config/alacritty/alacritty.yml
+fi
+
 # Finished.
 echo Dotfiles installation complete.
