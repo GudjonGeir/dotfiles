@@ -136,7 +136,7 @@ export NODE_MODULES="node_modules/.bin"
 # export JAVA_HOME="/$HOME/.apps/jdk180221"
 # export JAVA_HOME="/$HOME/.apps/jdk11.0.9"
 export GO_HOME="/usr/local/go"
-export PYENV_ROOT="$HOME/.pyenv"
+export GCLOUD_HOME="/Users/ggj/.apps/google-cloud-sdk"
 
 export PATH="$HOME/local/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
@@ -144,8 +144,7 @@ export PATH="$NODE_HOME/bin:$PATH"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$GO_HOME/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH="$(pyenv root)/shims:$PATH"
+export PATH="$GCLOUD_HOME/bin:$PATH"
 # export PATH="$NODE_MODULES:$PATH"
 export PATH="/usr/local/opt/terraform@0.11/bin:$PATH"
 export PATH="$HOME/.apps/google-cloud-sdk/bin:$PATH"
@@ -153,7 +152,7 @@ export PATH="$HOME/.apps/google-cloud-sdk/bin:$PATH"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-
+export AWS_PAGER="cat"
 
 aws_vikingprod() {
     export AWS_PROFILE=viking_prod
@@ -195,6 +194,8 @@ aws_vikingstaging() {
 aws_none() {
     unset AWS_PROFILE AWS_REGION AWS_DEFAULT_REGION
 }
+
+export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.gcloud/credentials.json"
 
 
 # alias k8_dev="kubectl config use-context k8s.dev.sothelabs.com"

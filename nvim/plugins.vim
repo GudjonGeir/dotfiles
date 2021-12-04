@@ -22,6 +22,9 @@ Plug 'flrnd/plastic.vim'
 Plug 'gryf/wombat256grf'
 Plug 'sainnhe/edge'
 
+
+" Languages
+Plug 'hashivim/vim-terraform'
 " Plug 'reasonml-editor/vim-reason'
 " Plug 'neomake/neomake'
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
