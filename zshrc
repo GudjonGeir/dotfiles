@@ -131,7 +131,7 @@ source $ZSH/oh-my-zsh.sh
 #
 
 
-export NODE_HOME="$HOME/.apps/node-v14.17.5"
+export NODE_HOME="$HOME/.apps/node-v16.13.0"
 export NODE_MODULES="node_modules/.bin"
 # export JAVA_HOME="/$HOME/.apps/jdk180221"
 # export JAVA_HOME="/$HOME/.apps/jdk11.0.9"
@@ -148,8 +148,7 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$(pyenv root)/shims:$PATH"
 # export PATH="$NODE_MODULES:$PATH"
 export PATH="/usr/local/opt/terraform@0.11/bin:$PATH"
-
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+export PATH="$HOME/.apps/google-cloud-sdk/bin:$PATH"
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -204,11 +203,5 @@ aws_none() {
 # alias k8_internal="kubectl config use-context k8s.internal.sothelabs.com"
 # alias k8_test="kubectl config use-context k8s.test.sothelabs.com"
 . ~/code/ws-monorepo/tools/sh/k8
-
-# opam configuration
-test -r /$HOME/.opam/opam-init/init.zsh && . /$HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
- eval "$(pyenv init -)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
