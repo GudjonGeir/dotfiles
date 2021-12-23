@@ -9,6 +9,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'liuchengxu/vim-which-key'
 Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-surround'
+Plug 'editorconfig/editorconfig-vim'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
