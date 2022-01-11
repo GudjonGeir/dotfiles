@@ -26,20 +26,23 @@ Plug 'sainnhe/edge'
 
 " Languages
 Plug 'hashivim/vim-terraform'
-" Plug 'reasonml-editor/vim-reason'
-" Plug 'neomake/neomake'
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
-
-Plug 'reasonml-editor/vim-reason-plus'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 
 
+" Airline 
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline_powerline_fonts = 0
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_theme='nord'
+
+" GitGutter 
 set updatetime=100
 let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_map_keys = 0
