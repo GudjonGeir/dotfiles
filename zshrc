@@ -131,14 +131,14 @@ source $ZSH/oh-my-zsh.sh
 #
 
 
-export NODE_HOME="$HOME/.apps/node-v16.13.0"
+export NODE_HOME="$HOME/.apps/node-v16.13.1"
 export NODE_MODULES="node_modules/.bin"
 # export JAVA_HOME="/$HOME/.apps/jdk180221"
 # export JAVA_HOME="/$HOME/.apps/jdk11.0.9"
 export GO_HOME="/usr/local/go"
 export GCLOUD_HOME="/Users/ggj/.apps/google-cloud-sdk"
 
-export PATH="$HOME/local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$NODE_HOME/bin:$PATH"
 export PATH="$JAVA_HOME/bin:$PATH"
