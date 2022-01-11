@@ -1,11 +1,11 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'scrooloose/nerdtree'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'kyazdani42/nvim-web-devicons'
+
+Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
 Plug 'liuchengxu/vim-which-key'
 Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-surround'
@@ -13,9 +13,16 @@ Plug 'editorconfig/editorconfig-vim'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'voldikss/vim-floaterm'
 
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+" Airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " Colorschemes
 Plug 'arcticicestudio/nord-vim'
 Plug 'ayu-theme/ayu-vim'

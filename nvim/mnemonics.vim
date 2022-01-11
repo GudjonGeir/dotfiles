@@ -48,15 +48,19 @@ let g:which_key_map.w = { 'name' : '+window' }
 let g:which_key_map.w.s = { 'name' : '+split' }
 
 let g:which_key_map.f = { 'name' : '+file' }
+let g:which_key_map.f.f = "find files"
+let g:which_key_map.f.r = "find recent"
 let g:which_key_map.f.t = { 'name' : '+tree' }
 let g:which_key_map.f.t.t = 'toggle'
 let g:which_key_map.f.t.f = 'find'
 let g:which_key_map.f.e = { 'name' : '+environment' }
 let g:which_key_map.f.e.e = 'vimrc'
 let g:which_key_map.f.e.r = 'reload'
-let g:which_key_map.p = { 'name' : '+ctrlp' }
-let g:which_key_map.p.f = "files"
 "call which_key#register('<Space>', "g:which_key_map")
+
+let g:which_key_map['/'] = 'live grep'
+let g:which_key_map['*'] = 'grep string'
+let g:which_key_map['.'] = 'resume search'
 
 " LSP bindings
 " TODO: only do when lsp is loaded?

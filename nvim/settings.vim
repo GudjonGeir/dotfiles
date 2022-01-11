@@ -35,10 +35,3 @@ set wildignore+=*/node_modules/*
 set wildmenu
 "set shiftround
 "set smarttab
-
-"" Configure NERDTree
-let NERDTreeIgnore = ['\.pyc$']
-" NERDTree configuration
-" Disable nerdtree for opeing up in new sessions.
-let g:NERDTreeHijackNetrw=0
-

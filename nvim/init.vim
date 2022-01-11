@@ -4,3 +4,4 @@ source ~/.config/nvim/mappings.vim
 source ~/.config/nvim/mnemonics.vim
 
 lua require("lsp")
+lua require("tree")

@@ -50,23 +50,17 @@ nnoremap <leader>wmd <C-w>J<cr>
 nnoremap <leader>wml <C-w>H<cr>
 nnoremap <leader>wmr <C-w>L<cr>
 
+nnoremap <leader>ff :Telescope find_files<cr>
+nnoremap <leader>fr :Telescope oldfiles<cr>
 nnoremap <leader>fee :vsplit $MYVIMRC<cr>
 nnoremap <leader>fer :source $MYVIMRC<cr>
 nnoremap <leader>fes :source $MYVIMRC<cr>
-nnoremap <leader>ftt :NERDTreeToggle<cr>
-nnoremap <leader>ftf :NERDTreeFind<cr>
+nnoremap <leader>ftt :NvimTreeToggle<cr>
+nnoremap <leader>ftf :NvimTreeFindFile<cr>
 
-" nnoremap <leader>pf :CtrlP<CR>
-" nnoremap <leader>pb :CtrlPBuffer<CR>
-nnoremap <leader>pf :call fzf#vim#gitfiles('--cached --exclude-standard --others', fzf#vim#with_preview('right'))<CR>
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
-nnoremap <leader>/ :Rg<cr>
-nnoremap <leader>* :Rg <c-r>=expand("<cword>")<cr><cr>
-" nnoremap <leader>/ :call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<c-r>=expand("<cword>")<cr>), 1, fzf#vim#with_preview(), <bang>0)<cr>
-
+nnoremap <leader>/ :Telescope live_grep<cr>
+nnoremap <leader>* :Telescope grep_string<cr>
+nnoremap <leader>. :Telescope resume<cr>
 
 nnoremap <leader>tr :set relativenumber!<cr>
 nnoremap <leader>tn :set number!<cr>
