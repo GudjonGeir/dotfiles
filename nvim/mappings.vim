@@ -17,7 +17,7 @@ nnoremap <leader>bf :bfirst<cr>
 nnoremap <leader>bl :blast<cr>
 nnoremap <leader>bn :bn<cr>
 nnoremap <leader>bp :bp<cr>
-nnoremap <leader>bb :call fzf#vim#buffers()<CR>
+nnoremap <leader>bb :Telescope buffers<cr>
 nnoremap <leader>bx :bd<cr>
 
 nnoremap <leader>gb :Gblame<cr>
