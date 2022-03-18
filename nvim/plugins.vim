@@ -9,6 +9,7 @@ Plug 'tpope/vim-commentary'
 Plug 'liuchengxu/vim-which-key'
 Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'editorconfig/editorconfig-vim'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
