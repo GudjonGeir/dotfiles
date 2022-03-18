@@ -20,22 +20,30 @@ nnoremap <leader>bp :bp<cr>
 nnoremap <leader>bb :Telescope buffers<cr>
 nnoremap <leader>bx :bd<cr>
 
-nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gc :BCommits<cr>
-nnoremap <leader>gC :Gcommit<cr>
-nnoremap <leader>gd :Gdiff<cr>
-nnoremap <leader>ge :Gedit<cr>
-nnoremap <leader>gl :Glog<cr>
-nnoremap <leader>gm :exec ":Gmove! ".input("New location: ")<cr>
-nnoremap <leader>gr :Gread<cr>
-nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>gw :Gwrite<cr>
-nnoremap <leader>gp :Gpull<cr>
-nnoremap <leader>gP :Gpush<cr>
+" TODO: convert to lua, use gitsigns onAttach
+nnoremap <leader>gb :Git blame<cr>
+" nnoremap <leader>gc :BCommits<cr>
+" nnoremap <leader>gC :Gcommit<cr>
+nnoremap <leader>gd :Gitsigns diffthis<cr>
+" nnoremap <leader>ge :Gedit<cr>
+" nnoremap <leader>gl :Glog<cr>
+" noremap <leader>gm :exec ":Gmove! ".input("New location: ")<cr>
+" nnoremap <leader>gr :Gread<cr>
+" nnoremap <leader>gs :Gstatus<cr>
+" nnoremap <leader>gw :Gwrite<cr>
+" nnoremap <leader>gp :Gpull<cr>
+" nnoremap <leader>gP :Gpush<cr>
 nnoremap <leader>gg :call Lazygit()<cr>
-nnoremap <leader>gt :GitGutterToggle<cr>
-nnoremap <leader>ghp :GitGutterPrevHunk<cr>
-nnoremap <leader>ghn :GitGutterNextHunk<cr>
+nnoremap <leader>gtt :Gitsigns toggle_signs<cr>
+nnoremap <leader>gtb :Gitsigns toggle_current_line_blame<cr>
+nnoremap <leader>gP :Gitsigns preview_hunk<cr>
+nnoremap <leader>gp :Gitsigns prev_hunk<cr>
+nnoremap <leader>gn :Gitsigns next_hunk<cr>
+nnoremap <leader>gs :Gitsigns stage_hunk<cr>
+vnoremap <leader>gs :Gitsigns stage_hunk<cr>
+nnoremap <leader>gu :Gitsigns undo_stage_hunk<cr>
+nnoremap <leader>gR :Gitsigns reset_hunk<cr>
+vnoremap <leader>gR :Gitsigns reset_hunk<cr>
 
 nmap <leader>cl <Plug>CommentaryLine
 vmap <leader>cl <Plug>Commentary

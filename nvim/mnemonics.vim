@@ -24,24 +24,20 @@ let g:which_key_map['c'] = {
 
 let g:which_key_map['g'] = {
       \ 'name' : '+git/version-control' ,
-      \ 'b' : 'fugitive-blame',
-      \ 'c' : 'commits-for-current-buffer',
-      \ 'C' : 'fugitive-commit',
-      \ 'd' : 'fugitive-diff',
-      \ 'e' : 'fugitive-edit',
-      \ 'l' : 'fugitive-log',
-      \ 'm' : 'fugitive-move',
-      \ 'r' : 'fugitive-read',
-      \ 's' : 'fugitive-status',
-      \ 'w' : 'fugitive-write',
-      \ 'p' : 'fugitive-pull',
-      \ 'P' : 'fugitive-push',
-      \ 't' : 'toggle-gutter',
-      \ 'h' : {
-           \ 'name' : '+hunks',
-           \ 'n' : 'next',
-           \ 'p' : 'prev',
-           \}
+      \ 'g' : 'lazygit',
+      \ 'b' : 'blame',
+      \ 'd' : 'diff',
+      \ 'P' : 'preview hunk',
+      \ 'p' : 'prev hunk',
+      \ 'n' : 'next hunk',
+      \ 's' : 'stage hunk',
+      \ 'u' : 'undo stage hunk',
+      \ 'R' : 'reset hunk',
+      \ 't' : {
+           \ 'name': '+toggles',
+           \ 't' : 'toggle signs',
+           \ 'b' : 'toggle line blame',
+           \ }
       \ }
 
 let g:which_key_map.w = { 'name' : '+window' }
@@ -64,18 +60,18 @@ let g:which_key_map['.'] = 'resume search'
 
 " LSP bindings
 " TODO: only do when lsp is loaded?
-let g:which_key_map.g = { 'name' : '+goto' }
-let g:which_key_map.g.g = { 'name' : '+LspDef' }
-let g:which_key_map.g.r = { 'name' : '+LspRefs' }
+let g:which_key_map_local.g = { 'name' : '+goto' }
+let g:which_key_map_local.g.g = { 'name' : '+LspDef' }
+let g:which_key_map_local.g.r = { 'name' : '+LspRefs' }
 
-let g:which_key_map.h = { 'name' : '+help' }
-let g:which_key_map.h.d = { 'name' : '+LspTypeDef' }
-let g:which_key_map.h.h = { 'name' : '+LspHover' }
+let g:which_key_map_local.h = { 'name' : '+help' }
+let g:which_key_map_local.h.d = { 'name' : '+LspTypeDef' }
+let g:which_key_map_local.h.h = { 'name' : '+LspHover' }
 
-let g:which_key_map.r = { 'name' : '+refactor' }
-let g:which_key_map.r.r = { 'name' : '+LspRename' }
-let g:which_key_map.r.o = { 'name' : '+LspOrganize' }
+let g:which_key_map_local.r = { 'name' : '+refactor' }
+let g:which_key_map_local.r.r = { 'name' : '+LspRename' }
+let g:which_key_map_local.r.o = { 'name' : '+LspOrganize' }
 
-let g:which_key_map.d = { 'name' : '+diagnostic' }
-let g:which_key_map.d.n = { 'name' : '+LspDiagPrev' }
-let g:which_key_map.d.l = { 'name' : '+LspDiagLine' }
+let g:which_key_map_local.d = { 'name' : '+diagnostic' }
+let g:which_key_map_local.d.n = { 'name' : '+LspDiagPrev' }
+let g:which_key_map_local.d.l = { 'name' : '+LspDiagLine' }
