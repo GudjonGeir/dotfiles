@@ -36,6 +36,7 @@ Plug 'sainnhe/edge'
 " Languages
 Plug 'hashivim/vim-terraform'
 Plug 'neovim/nvim-lspconfig'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'hrsh7th/nvim-compe'
 
 call plug#end()

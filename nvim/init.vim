@@ -4,5 +4,6 @@ source ~/.config/nvim/mappings.vim
 source ~/.config/nvim/mnemonics.vim
 
 lua require("lsp")
-lua require("tree")
-lua require("git")
+lua require("plugins.nvim-tree")
+lua require("plugins.gitsigns")
+lua require("plugins.compe")
