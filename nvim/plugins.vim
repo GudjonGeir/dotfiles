@@ -37,6 +37,7 @@ Plug 'sainnhe/edge'
 Plug 'hashivim/vim-terraform'
 Plug 'neovim/nvim-lspconfig'
 Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'ray-x/lsp_signature.nvim'
 Plug 'hrsh7th/nvim-compe'
 
 call plug#end()
