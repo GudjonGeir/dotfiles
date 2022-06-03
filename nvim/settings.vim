@@ -7,7 +7,8 @@ colorscheme nord
 
 set history=10000
 set hidden
-set notimeout
+" set notimeout
+set timeoutlen=100
 set number
 set numberwidth=4
 " set relativenumber

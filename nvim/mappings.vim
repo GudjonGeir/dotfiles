@@ -9,8 +9,8 @@ let maplocalleader = ","
 " Bind leader (space) p to start Ctrl+p in normal mode.
 "nnoremap <leader><space>
 
-nnoremap <silent> <leader><space> :WhichKey '<Space>'<CR>
-nnoremap <silent> <localleader>, :WhichKey ','<CR>
+" nnoremap <silent> <leader><space> :WhichKey '<Space>'<CR>
+" nnoremap <silent> <localleader>, :WhichKey ','<CR>
 
 nnoremap <leader>bd :BD<cr>
 nnoremap <leader>bf :bfirst<cr>
@@ -72,5 +72,3 @@ nnoremap <leader>. :Telescope resume<cr>
 
 nnoremap <leader>tr :set relativenumber!<cr>
 nnoremap <leader>tn :set number!<cr>
-
-nnoremap <leader>sn :noh<cr>

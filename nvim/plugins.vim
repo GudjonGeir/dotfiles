@@ -6,7 +6,8 @@ Plug 'kyazdani42/nvim-web-devicons'
 
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tpope/vim-commentary'
-Plug 'liuchengxu/vim-which-key'
+" Plug 'liuchengxu/vim-which-key'
+Plug 'folke/which-key.nvim'
 Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -57,6 +58,9 @@ let g:airline_theme='nord'
 set updatetime=100
 let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_map_keys = 0
+
+" BufKil
+let g:BufKillCreateMappings = 0
 
 
 " FZF {{{
