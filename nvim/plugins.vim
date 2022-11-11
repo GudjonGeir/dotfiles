@@ -103,7 +103,7 @@ endfunction
 
 function! Lazygit()
   " Size variables
-  let height = float2nr(&lines * 0.7) " 40% of screen
+  let height = float2nr(&lines * 0.8) " 40% of screen
   let width = float2nr(&columns * 0.9) " 70% of screen
   let vertical = float2nr(&lines * 0.1) " space to top: 10%
   let horizontal = float2nr((&columns - width) / 2)
