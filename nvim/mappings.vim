@@ -58,7 +58,7 @@ nnoremap <leader>wmd <C-w>J<cr>
 nnoremap <leader>wml <C-w>H<cr>
 nnoremap <leader>wmr <C-w>L<cr>
 
-nnoremap <leader>ff :Telescope find_files<cr>
+nnoremap <leader>ff :Telescope git_files<cr>
 nnoremap <leader>fr :Telescope oldfiles<cr>
 nnoremap <leader>fee :vsplit $MYVIMRC<cr>
 nnoremap <leader>fer :source $MYVIMRC<cr>
