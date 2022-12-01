@@ -203,4 +203,4 @@ for_window [class=Alacritty] border pixel 1
 for_window [title="^.*Mozilla Firefox"] border pixel 1
 
 # autostarts
-exec --no-startup-id polybar 
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
