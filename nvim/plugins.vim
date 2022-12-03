@@ -1,9 +1,11 @@
 call plug#begin('~/.vim/plugged')
 
+" Dependencies
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-web-devicons' " used by telescope and lualine
 
+" Tools and utilities
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tpope/vim-commentary'
 " Plug 'liuchengxu/vim-which-key'
@@ -12,7 +14,9 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'norcalli/nvim-colorizer.lua'
 
+" Finders
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -24,17 +28,17 @@ Plug 'voldikss/vim-floaterm'
 Plug 'tpope/vim-fugitive'
 " Plug 'airblade/vim-gitgutter'
 Plug 'lewis6991/gitsigns.nvim'
-" Airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+
+" Status and buffer lines
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'akinsho/bufferline.nvim'
+
 " Colorschemes
 Plug 'arcticicestudio/nord-vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'flrnd/plastic.vim'
 Plug 'gryf/wombat256grf'
 Plug 'sainnhe/edge'
-
-Plug 'norcalli/nvim-colorizer.lua'
 
 " Languages
 Plug 'hashivim/vim-terraform'
@@ -45,16 +49,6 @@ Plug 'hrsh7th/nvim-compe'
 
 call plug#end()
 
-
-" Airline 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#formatter = 'default'
-let g:airline_powerline_fonts = 0
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_theme='nord'
 
 " GitGutter 
 set updatetime=100
