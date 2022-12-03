@@ -34,6 +34,7 @@ Plug 'flrnd/plastic.vim'
 Plug 'gryf/wombat256grf'
 Plug 'sainnhe/edge'
 
+Plug 'norcalli/nvim-colorizer.lua'
 
 " Languages
 Plug 'hashivim/vim-terraform'
