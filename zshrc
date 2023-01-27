@@ -38,6 +38,10 @@ source ~/.zshrc.private
 alias gvim="nvim"
 alias vim="nvim"
 alias vi="nvim"
+
+alias tf="terraform"
+alias k="kubectl"
+alias m="make"
 # alias emacs='/usr/local/Cellar/emacs-plus/26.2/Emacs.app/Contents/MacOS/Emacs -nw'
 export EDITOR="nvim"
 # export GIT_EDITOR="emacs"
@@ -136,6 +140,7 @@ export NODE_MODULES="node_modules/.bin"
 # export JAVA_HOME="/$HOME/.apps/jdk180221"
 # export JAVA_HOME="/$HOME/.apps/jdk11.0.9"
 export GO_HOME="/usr/local/go"
+export GOPATH="$HOME/go"
 export GCLOUD_HOME="/Users/ggj/.apps/google-cloud-sdk"
 
 export PATH="$HOME/.local/bin:$PATH"
@@ -143,6 +148,7 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="$NODE_HOME/bin:$PATH"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$GO_HOME/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$GCLOUD_HOME/bin:$PATH"
 # export PATH="$NODE_MODULES:$PATH"
@@ -153,6 +159,18 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 export AWS_PAGER="cat"
+
+aws_newcare() {
+    export AWS_PROFILE=newcare
+    export AWS_REGION=us-east-2
+    export AWS_DEFAULT_REGION=$AWS_REGION
+    export AWS_ACCOUNT_ID=371742717794
+    aws ecr get-login-password \
+        --region $AWS_REGION \
+        | docker login \
+        --username AWS \
+        --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+}
 
 aws_vikingprod() {
     export AWS_PROFILE=viking_prod

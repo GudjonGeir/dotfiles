@@ -46,6 +46,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'hrsh7th/nvim-compe'
+Plug 'google/vim-jsonnet'
 
 call plug#end()
 
