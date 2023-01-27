@@ -29,31 +29,31 @@ ask() {
 
 # Remove all dotfiles from the home directory if present.
 echo Removing any existing dotfiles from your home directory.
-rm -rf ~/.vimrc ~/.zshrc ~/.spacemacs ~/.gitconfig ~/.config/nvim
+rm -rf ~/.vimrc ~/.zshrc ~/.spacemacs ~/.gitconfig ~/config/nvim
 
 # Initialize symlinks.
 echo Creating symlinks in your home directory that point to this dotfiles repository.
 ln -s "$PWD/spacemacs" ~/.spacemacs
 ln -s "$PWD/zshrc" ~/.zshrc
 ln -s "$PWD/gitconfig" ~/.gitconfig
-ln -s "$PWD/nvim" ~/.config/nvim
+ln -s "$PWD/nvim" ~/config/nvim
 
 if ask "Install awesome config"; then
-    rm -f ~/.config/awesome/rc.lua
-    mkdir -p ~/.config/awesome
-    ln -s "$PWD/.config/awesome/rc.lua" ~/.config/awesome/rc.lua
+    rm -f ~/config/awesome/rc.lua
+    mkdir -p ~/config/awesome
+    ln -s "$PWD/config/awesome/rc.lua" ~/config/awesome/rc.lua
 fi
 
 if ask "Install termite config"; then
-    rm -f ~/.config/termite/config
-    mkdir -p ~/.config/termite
-    ln -s "$PWD/.config/termite/config" ~/.config/termite/config
+    rm -f ~/config/termite/config
+    mkdir -p ~/config/termite
+    ln -s "$PWD/config/termite/config" ~/config/termite/config
 fi
 
 if ask "Install alacritty config"; then
-    rm -f ~/.config/alacritty/alacritty.yml
-    mkdir -p ~/.config/alacritty
-    ln -s "$PWD/.config/alacritty/alacritty.yml" ~/.config/alacritty/alacritty.yml
+    rm -f ~/config/alacritty/alacritty.yml
+    mkdir -p ~/config/alacritty
+    ln -s "$PWD/config/alacritty/alacritty.yml" ~/config/alacritty/alacritty.yml
 fi
 
 # Finished.
