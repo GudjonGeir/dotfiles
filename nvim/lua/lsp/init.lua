@@ -52,6 +52,7 @@ end
 
 for _, server in ipairs({
   "gopls",
+  "jsonnetls",
   "null-ls",
   "tsserver",
 }) do
