@@ -54,7 +54,12 @@ require('packer').startup(function(use)
   }
 
   -- Tools and utilities
-  use 'kyazdani42/nvim-tree.lua'
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    }
+  }
   use 'tpope/vim-commentary'
   use 'folke/which-key.nvim'
   use 'qpkorr/vim-bufkill'
@@ -90,7 +95,7 @@ require('packer').startup(function(use)
     branch = '0.1.x',
     requires = {
       'nvim-lua/plenary.nvim',
-      'kyazdani42/nvim-tree.lua',
+      'nvim-tree/nvim-tree.lua',
     },
   }
 
