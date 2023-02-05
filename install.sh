@@ -36,24 +36,42 @@ echo Creating symlinks in your home directory that point to this dotfiles reposi
 ln -s "$PWD/spacemacs" ~/.spacemacs
 ln -s "$PWD/zshrc" ~/.zshrc
 ln -s "$PWD/gitconfig" ~/.gitconfig
-ln -s "$PWD/nvim" ~/config/nvim
+ln -s "$PWD/nvim" ~/.config/nvim
+
+if ask "Install i3 config"; then
+    rm -f ~/.config/i3/config
+    mkdir -p ~/.config/i3
+    ln -s "$PWD/config/i3/config" ~/.config/i3/config
+fi
 
 if ask "Install awesome config"; then
-    rm -f ~/config/awesome/rc.lua
-    mkdir -p ~/config/awesome
-    ln -s "$PWD/config/awesome/rc.lua" ~/config/awesome/rc.lua
+    rm -f ~/.config/awesome/rc.lua
+    mkdir -p ~/.config/awesome
+    ln -s "$PWD/config/awesome/rc.lua" ~/.config/awesome/rc.lua
 fi
 
 if ask "Install termite config"; then
-    rm -f ~/config/termite/config
+    rm -f ~/.config/termite/config
     mkdir -p ~/config/termite
-    ln -s "$PWD/config/termite/config" ~/config/termite/config
+    ln -s "$PWD/config/termite/config" ~/.config/termite/config
 fi
 
 if ask "Install alacritty config"; then
-    rm -f ~/config/alacritty/alacritty.yml
-    mkdir -p ~/config/alacritty
-    ln -s "$PWD/config/alacritty/alacritty.yml" ~/config/alacritty/alacritty.yml
+    rm -f ~/.config/alacritty/alacritty.yml
+    mkdir -p ~/.config/alacritty
+    ln -s "$PWD/config/alacritty/alacritty.yml" ~/.config/alacritty/alacritty.yml
+fi
+
+if ask "Install polybar config"; then
+    rm -rf ~/.config/polybar
+    mkdir -p ~/.config
+    ln -s "$PWD/config/polybar" ~/.config/polybar
+fi
+
+if ask "Install rofi config"; then
+    rm -rf ~/.config/rofi
+    mkdir -p ~/.config
+    ln -s "$PWD/config/rofi" ~/.config/rofi
 fi
 
 # Finished.

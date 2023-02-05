@@ -48,9 +48,6 @@ export EDITOR="nvim"
 
 alias la="ls -a"
 
-alias pants_test_changed="./pants test --changed-parent=origin/master --changed-include-dependees=transitive"
-
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -135,13 +132,11 @@ source $ZSH/oh-my-zsh.sh
 #
 
 
-export NODE_HOME="$HOME/.apps/node-v16.13.1"
-export NODE_MODULES="node_modules/.bin"
+export NODE_HOME="$HOME/.apps/node"
 # export JAVA_HOME="/$HOME/.apps/jdk180221"
 # export JAVA_HOME="/$HOME/.apps/jdk11.0.9"
 export GO_HOME="/usr/local/go"
 export GOPATH="$HOME/go"
-export GCLOUD_HOME="/Users/ggj/.apps/google-cloud-sdk"
 
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
@@ -150,10 +145,6 @@ export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$GO_HOME/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
-export PATH="$GCLOUD_HOME/bin:$PATH"
-# export PATH="$NODE_MODULES:$PATH"
-export PATH="/usr/local/opt/terraform@0.11/bin:$PATH"
-export PATH="$HOME/.apps/google-cloud-sdk/bin:$PATH"
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -223,4 +214,4 @@ export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.gcloud/credentials.json"
 # alias k8_test="kubectl config use-context k8s.test.sothelabs.com"
 . ~/code/ws-monorepo/tools/sh/k8
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f /usr/share/fzf/shell/key-bindings.zsh ] && source /usr/share/fzf/shell/key-bindings.zsh
