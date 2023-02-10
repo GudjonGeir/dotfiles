@@ -197,3 +197,4 @@ for_window [class=Slack] border pixel 1
 # autostarts
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id nitrogen --restore
+exec_always --no-startup-id killall -q picom && picom --config $HOME/.config/picom/picom.conf
