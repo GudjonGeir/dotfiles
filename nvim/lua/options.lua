@@ -6,7 +6,7 @@ vim.g.maplocalleader = ','
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+vim.cmd [[colorscheme everforest]]
 
 -- Set highlight on search
 vim.o.hlsearch = false

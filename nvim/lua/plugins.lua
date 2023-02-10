@@ -81,6 +81,7 @@ require('packer').startup(function(use)
 
 
   -- Colorschemes
+  use 'sainnhe/everforest'
   use 'arcticicestudio/nord-vim'
   use 'navarasu/onedark.nvim'
   use 'ayu-theme/ayu-vim'

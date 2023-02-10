@@ -13,7 +13,7 @@ configuration {
 }
 
 /*****----- Global Properties -----*****/
-@import                          "themes/nord.rasi"
+@import                          "themes/current.rasi"
 
 * {
     border-colour:               var(selected);

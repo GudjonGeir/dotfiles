@@ -39,9 +39,9 @@ ln -s "$PWD/gitconfig" ~/.gitconfig
 ln -s "$PWD/nvim" ~/.config/nvim
 
 if ask "Install i3 config"; then
-    rm -f ~/.config/i3/config
-    mkdir -p ~/.config/i3
-    ln -s "$PWD/config/i3/config" ~/.config/i3/config
+    rm -rf ~/.config/i3
+    mkdir -p ~/.config
+    ln -s "$PWD/config/i3" ~/.config/i3
 fi
 
 if ask "Install awesome config"; then
@@ -57,9 +57,9 @@ if ask "Install termite config"; then
 fi
 
 if ask "Install alacritty config"; then
-    rm -f ~/.config/alacritty/alacritty.yml
-    mkdir -p ~/.config/alacritty
-    ln -s "$PWD/config/alacritty/alacritty.yml" ~/.config/alacritty/alacritty.yml
+    rm -rf ~/.config/alacritty
+    mkdir -p ~/.config
+    ln -s "$PWD/config/alacritty" ~/.config/alacritty
 fi
 
 if ask "Install polybar config"; then
