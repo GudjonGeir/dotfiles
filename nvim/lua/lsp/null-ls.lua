@@ -16,11 +16,16 @@ M.setup = function(on_attach)
 
       -- postgres
       null_ls.builtins.formatting.sqlfluff.with({
-        extra_args = {"--dialect", "postgres"}
+        extra_args = { "--dialect", "postgres" }
       }),
       null_ls.builtins.diagnostics.sqlfluff.with({
-        extra_args = {"--dialect", "postgres"}
-      })
+        extra_args = { "--dialect", "postgres", "--exclude-rules", "L016" }
+      }),
+
+
+      -- protobuf
+      null_ls.builtins.diagnostics.buf,
+      null_ls.builtins.formatting.buf
 
       -- other
       -- null_ls.builtins.code_actions.refactoring

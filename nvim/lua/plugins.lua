@@ -18,9 +18,6 @@ require('packer').startup(function(use)
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
 
-      -- Useful status updates for LSP
-      'j-hui/fidget.nvim',
-
       -- Additional lua configuration, makes nvim stuff amazing
       'folke/neodev.nvim',
 
@@ -53,11 +50,20 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
+  -- CoPilot
+  use 'github/copilot.vim'
+
   -- Tools and utilities
   use {
     'nvim-tree/nvim-tree.lua',
     requires = {
       'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    }
+  }
+  use {
+    'ThePrimeagen/harpoon',
+    requires = {
+      'nvim-lua/plenary.nvim',
     }
   }
   use 'tpope/vim-commentary'
@@ -69,7 +75,7 @@ require('packer').startup(function(use)
   use 'norcalli/nvim-colorizer.lua'
   use 'voldikss/vim-floaterm'
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  use 'tpope/vim-sleuth'                    -- Detect tabstop and shiftwidth automatically
 
   -- Git related plugins
   use 'tpope/vim-rhubarb'

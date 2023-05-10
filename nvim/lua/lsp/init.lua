@@ -9,9 +9,9 @@ end
 
 vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
   vim.lsp.handlers.signature_help, {
-  border = 'rounded',
-  close_events = { "CursorMoved", "BufHidden", "InsertCharPre" },
-}
+    border = 'rounded',
+    close_events = { "CursorMoved", "BufHidden", "InsertCharPre" },
+  }
 )
 
 
@@ -29,7 +29,7 @@ local on_attach = function(client, bufnr)
   -- help and info bindings
   buf_map(bufnr, '<localleader>hh', vim.lsp.buf.hover, "")
   buf_map(bufnr, '<localleader>hs', vim.lsp.buf.signature_help, 'Signature Documentation')
-  vim.keymap.set({ 'n', 'i' }, '<C-k>', vim.lsp.buf.signature_help,
+  vim.keymap.set({ 'n', 'i' }, '<C-s>', vim.lsp.buf.signature_help,
     { desc = 'Signature Documentation', silent = true, buffer = bufnr })
   buf_map(bufnr, '<leader>sd', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   buf_map(bufnr, '<leader>sw', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
@@ -72,7 +72,7 @@ local servers = {
   'gopls',
   'jsonnet_ls',
   'tsserver',
-  'sumneko_lua',
+  -- 'sumneko_lua',
 }
 
 -- Ensure the servers above are installed
@@ -93,6 +93,3 @@ mason_lspconfig.setup_handlers {
     require("lsp.tsserver").setup(on_attach, capabilities)
   end,
 }
-
--- Turn on lsp status information
-require('fidget').setup()
