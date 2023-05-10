@@ -138,6 +138,7 @@ export NODE_HOME="$HOME/.apps/node"
 export GO_HOME="/usr/local/go"
 export GOPATH="$HOME/go"
 
+export PATH="/usr/local/include:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$NODE_HOME/bin:$PATH"
@@ -145,6 +146,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$GO_HOME/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -206,12 +208,5 @@ aws_none() {
 
 export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.gcloud/credentials.json"
 
-
-# alias k8_dev="kubectl config use-context k8s.dev.sothelabs.com"
-# alias k8_prod="kubectl config use-context k8s.prod.sothelabs.com"
-# alias k8_staging="kubectl config use-context k8s.staging.sothelabs.com"
-# alias k8_internal="kubectl config use-context k8s.internal.sothelabs.com"
-# alias k8_test="kubectl config use-context k8s.test.sothelabs.com"
-. ~/code/ws-monorepo/tools/sh/k8
 
 [ -f /usr/share/fzf/shell/key-bindings.zsh ] && source /usr/share/fzf/shell/key-bindings.zsh
