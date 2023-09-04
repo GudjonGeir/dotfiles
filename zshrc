@@ -165,6 +165,13 @@ aws_newcare() {
         --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
 }
 
+aws_newcareprod() {
+    export AWS_PROFILE=newcare_prod
+    export AWS_REGION=eu-west-1
+    export AWS_DEFAULT_REGION=$AWS_REGION
+    export AWS_ACCOUNT_ID=371742717794
+}
+
 aws_vikingprod() {
     export AWS_PROFILE=viking_prod
     export AWS_REGION=us-east-1

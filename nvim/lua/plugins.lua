@@ -38,6 +38,13 @@ require('packer').startup(function(use)
     },
   }
 
+  use { -- lsp diagnostics
+    'folke/trouble.nvim',
+    requires = {
+      'nvim-tree/nvim-web-devicons'
+    },
+  }
+
   use { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     run = function()
@@ -49,6 +56,7 @@ require('packer').startup(function(use)
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
+
 
   -- CoPilot
   use 'github/copilot.vim'
@@ -66,6 +74,7 @@ require('packer').startup(function(use)
       'nvim-lua/plenary.nvim',
     }
   }
+  use 'christoomey/vim-tmux-navigator' -- Navigate between vim and tmux panes
   use 'tpope/vim-commentary'
   use 'folke/which-key.nvim'
   use 'qpkorr/vim-bufkill'

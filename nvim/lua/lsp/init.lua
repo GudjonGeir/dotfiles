@@ -42,6 +42,7 @@ local on_attach = function(client, bufnr)
   buf_map(bufnr, '<localleader>dp', vim.diagnostic.goto_prev, "")
   buf_map(bufnr, '<localleader>dn', vim.diagnostic.goto_next, "")
   buf_map(bufnr, '<localleader>dl', vim.diagnostic.open_float, "")
+  buf_map(bufnr, '<localleader>dd', ':TroubleToggle<cr>', "")
 
   buf_map(bufnr, '<localleader>a', vim.lsp.buf.code_action, "")
 
