@@ -12,8 +12,14 @@ end
 local M = {}
 M.setup = function(on_attach, capabilities)
     lspconfig.tsserver.setup({
+         init_options = { 
+            preferences = { 
+              -- other preferences... 
+              importModuleSpecifierPreference = 'project-relative', 
+              importModuleSpecifierEnding = 'minimal', 
+            },  
+        },
         on_attach = function(client, bufnr)
-            print("tsserver on_attach" .. bufnr)
             -- disable built in formatting to prevent conflict with prettier
             client.server_capabilities.documentFormattingProvider = false
             client.server_capabilities.documentRangeFormattingProvider = false

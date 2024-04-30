@@ -172,6 +172,14 @@ aws_newcareprod() {
     export AWS_ACCOUNT_ID=371742717794
 }
 
+aws_ecr_login() {
+    aws ecr get-login-password \
+        --region $AWS_REGION \
+        | docker login \
+        --username AWS \
+        --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+}
+
 aws_vikingprod() {
     export AWS_PROFILE=viking_prod
     export AWS_REGION=us-east-1

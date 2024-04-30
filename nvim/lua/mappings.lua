@@ -44,8 +44,15 @@ vim.keymap.set('n', '<leader>fes', ':source $MYVIMRC<cr>', { silent = true})
 vim.keymap.set('n', '<leader>ftt', ':NvimTreeToggle<cr>', { silent = true})
 vim.keymap.set('n', '<leader>ftf', ':NvimTreeFindFile<cr>', { silent = true})
 
+-- NeoTest
+vim.keymap.set("n", "<leader>tt", "<cmd>lua require('neotest').run.run()<CR>", { silent = true })
+vim.keymap.set("n", "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", { silent = true })
+vim.keymap.set("n", "<leader>tp", "<cmd>lua require('neotest').run.run(vim.fn.getcwd())<CR>", { silent = true })
+vim.keymap.set("n", "<leader>to", "<cmd>lua require('neotest').summary.toggle()<CR>", { silent = true })
+
 vim.keymap.set('n', '<leader>/', ':Telescope live_grep<cr>', { silent = true})
 vim.keymap.set('n', '<leader>*', ':Telescope grep_string<cr>', { silent = true})
 vim.keymap.set('n', '<leader>.', ':Telescope resume<cr>', { silent = true})
 
-vim.keymap.set('n', '<leader>tr', ':set relativenumber!<cr>', { silent = true})vim.keymap.set('n', '<leader>tn', ':set number!<cr>', { silent = true})
+vim.keymap.set('n', '<leader>Tr', ':set relativenumber!<cr>', { silent = true})
+vim.keymap.set('n', '<leader>Tn', ':set number!<cr>', { silent = true})

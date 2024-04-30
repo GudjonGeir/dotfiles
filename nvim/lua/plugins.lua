@@ -118,6 +118,36 @@ require('packer').startup(function(use)
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
+
+  use({
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-neotest/neotest-go",
+      -- Your other test adapters here
+    },
+    config = function()
+      -- get neotest namespace (api call creates or returns namespace)
+      -- local neotest_ns = vim.api.nvim_create_namespace("neotest")
+      -- vim.diagnostic.config({
+      --   virtual_text = {
+      --     format = function(diagnostic)
+      --       local message =
+      --         diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+      --       return message
+      --     end,
+      --   },
+      -- }, neotest_ns)
+      require("neotest").setup({
+        -- your neotest config here
+        adapters = {
+          require("neotest-go"),
+        },
+      })
+    end,
+  })
+ 
+  
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
