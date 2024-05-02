@@ -1,12 +1,11 @@
 -- Bind leader space bar as the leader key for vim.
-vim.g.mapleader = ' '
+vim.g.mapleader = " "
 
 -- Bind , as the local leader for specific filetypes.
-vim.g.maplocalleader = ','
+vim.g.maplocalleader = ","
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme everforest]]
 
 -- Set highlight on search
 vim.o.hlsearch = true
@@ -17,7 +16,7 @@ vim.wo.numberwidth = 4
 vim.wo.relativenumber = true
 
 -- Enable mouse mode
-vim.o.mouse = 'a'
+vim.o.mouse = "a"
 
 -- Enable break indent
 vim.o.wrap = false
@@ -34,10 +33,10 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 
 -- When to display the sign column
-vim.wo.signcolumn = 'yes'
+vim.wo.signcolumn = "yes"
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.o.completeopt = "menuone,noselect"
 
 -- How many ":" commands to store
 vim.o.history = 10000

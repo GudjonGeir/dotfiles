@@ -1,181 +1,81 @@
--- Install packer
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-local is_bootstrap = false
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  is_bootstrap = true
-  vim.fn.system { 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path }
-  vim.cmd [[packadd packer.nvim]]
-end
+-- [[ Install `lazy.nvim` plugin manager ]]
+--    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+end ---@diagnostic disable-next-line: undefined-field
+vim.opt.rtp:prepend(lazypath)
 
-require('packer').startup(function(use)
-  -- Package manager
-  use 'wbthomason/packer.nvim'
+-- [[ Configure and install plugins ]]
+require("lazy").setup({
 
-  use { -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
-    requires = {
-      -- Automatically install LSPs to stdpath for neovim
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+	require("user.plugins.lsp"),
+	require("user.plugins.nvim-cmp"),
 
-      -- Additional lua configuration, makes nvim stuff amazing
-      'folke/neodev.nvim',
+	require("user.plugins.treesitter"),
+	require("user.plugins.which-key"),
+	require("user.plugins.telescope"),
+	require("user.plugins.conform"),
+	require("user.plugins.nvim-tree"),
+	require("user.plugins.harpoon"),
 
-      -- Linters and formatters
-      'jose-elias-alvarez/null-ls.nvim',
-      'jay-babu/mason-null-ls.nvim'
-    },
-  }
+	require("user.plugins.colorizer"),
+	require("user.plugins.indent-blankline"),
 
-  use { -- Autocompletion
-    'hrsh7th/nvim-cmp',
-    requires = {
-      'hrsh7th/cmp-nvim-lsp',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path'
-    },
-  }
+	--   -- CoPilot
+	"github/copilot.vim",
 
-  use { -- lsp diagnostics
-    'folke/trouble.nvim',
-    requires = {
-      'nvim-tree/nvim-web-devicons'
-    },
-  }
+	--   use 'christoomey/vim-tmux-navigator' -- Navigate between vim and tmux panes
+	"tpope/vim-commentary",
+	"qpkorr/vim-bufkill",
+	"tpope/vim-surround",
+	"tpope/vim-repeat",
+	--   use 'editorconfig/editorconfig-vim'
+	"voldikss/vim-floaterm",
+	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 
-  use { -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    run = function()
-      pcall(require('nvim-treesitter.install').update { with_sync = true })
-    end,
-  }
+	--   -- Git related plugins
+	--   use 'tpope/vim-rhubarb'
+	{ "lewis6991/gitsigns.nvim", opts = {} },
 
-  use { -- Additional text objects via treesitter
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    after = 'nvim-treesitter',
-  }
+	--   -- Status and buffer lines
+	require("user.plugins.lualine"),
+	{ "akinsho/bufferline.nvim", opts = {} },
 
+	--   -- Colorschemes
+	require("user.themes.everforest"),
+	--   use 'arcticicestudio/nord-vim'
+	--   use 'navarasu/onedark.nvim'
+	--   use 'ayu-theme/ayu-vim'
+	--   use 'flrnd/plastic.vim'
+	--   use 'gryf/wombat256grf'
+	--   use 'sainnhe/edge'
 
-  -- CoPilot
-  use 'github/copilot.vim'
-
-  -- Tools and utilities
-  use {
-    'nvim-tree/nvim-tree.lua',
-    requires = {
-      'nvim-tree/nvim-web-devicons', -- optional, for file icons
-    }
-  }
-  use {
-    'ThePrimeagen/harpoon',
-    requires = {
-      'nvim-lua/plenary.nvim',
-    }
-  }
-  use 'christoomey/vim-tmux-navigator' -- Navigate between vim and tmux panes
-  use 'tpope/vim-commentary'
-  use 'folke/which-key.nvim'
-  use 'qpkorr/vim-bufkill'
-  use 'tpope/vim-surround'
-  use 'tpope/vim-repeat'
-  use 'editorconfig/editorconfig-vim'
-  use 'norcalli/nvim-colorizer.lua'
-  use 'voldikss/vim-floaterm'
-  use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use 'tpope/vim-sleuth'                    -- Detect tabstop and shiftwidth automatically
-
-  -- Git related plugins
-  use 'tpope/vim-rhubarb'
-  use 'lewis6991/gitsigns.nvim'
-
-  -- Status and buffer lines
-  use 'nvim-lualine/lualine.nvim'
-  use 'akinsho/bufferline.nvim'
-
-
-  -- Colorschemes
-  use 'sainnhe/everforest'
-  use 'arcticicestudio/nord-vim'
-  use 'navarasu/onedark.nvim'
-  use 'ayu-theme/ayu-vim'
-  use 'flrnd/plastic.vim'
-  use 'gryf/wombat256grf'
-  use 'sainnhe/edge'
-
-
-  -- Fuzzy Finder (files, lsp, etc)
-  use {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'nvim-tree/nvim-tree.lua',
-    },
-  }
-
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-
-
-  use({
-    "nvim-neotest/neotest",
-    requires = {
-      "nvim-neotest/neotest-go",
-      -- Your other test adapters here
-    },
-    config = function()
-      -- get neotest namespace (api call creates or returns namespace)
-      -- local neotest_ns = vim.api.nvim_create_namespace("neotest")
-      -- vim.diagnostic.config({
-      --   virtual_text = {
-      --     format = function(diagnostic)
-      --       local message =
-      --         diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
-      --       return message
-      --     end,
-      --   },
-      -- }, neotest_ns)
-      require("neotest").setup({
-        -- your neotest config here
-        adapters = {
-          require("neotest-go"),
-        },
-      })
-    end,
-  })
- 
-  
-
-  -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
-  local has_plugins, plugins = pcall(require, 'custom.plugins')
-  if has_plugins then
-    plugins(use)
-  end
-
-  if is_bootstrap then
-    require('packer').sync()
-  end
-end)
-
--- When we are bootstrapping a configuration, it doesn't
--- make sense to execute the rest of the init.lua.
---
--- You'll need to restart nvim, and then it will work.
-if is_bootstrap then
-  print '=================================='
-  print '    Plugins are being installed'
-  print '    Wait until Packer completes,'
-  print '       then restart nvim'
-  print '=================================='
-  return
-end
-
--- Automatically source and re-compile packer whenever you save this init.lua
-local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost', {
-  command = 'source <afile> | silent! LspStop | silent! LspStart | PackerCompile',
-  group = packer_group,
-  pattern = vim.fn.expand '$MYVIMRC',
+	--   use({
+	--     "nvim-neotest/neotest",
+	--     requires = {
+	--       "nvim-neotest/neotest-go",
+	--       -- Your other test adapters here
+	--     },
+	--     config = function()
+	--       -- get neotest namespace (api call creates or returns namespace)
+	--       -- local neotest_ns = vim.api.nvim_create_namespace("neotest")
+	--       -- vim.diagnostic.config({
+	--       --   virtual_text = {
+	--       --     format = function(diagnostic)
+	--       --       local message =
+	--       --         diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+	--       --       return message
+	--       --     end,
+	--       --   },
+	--       -- }, neotest_ns)
+	--       require("neotest").setup({
+	--         -- your neotest config here
+	--         adapters = {
+	--           require("neotest-go"),
+	--         },
+	--       })
+	--     end,
+	--   })
 })

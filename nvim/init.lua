@@ -1,6 +1,3 @@
-
-require("plugins")
 require("options")
-require("plugin-options")
+require("plugins")
 require("mappings")
-require("lsp")
