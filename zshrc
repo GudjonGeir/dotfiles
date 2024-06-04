@@ -47,6 +47,7 @@ export EDITOR="nvim"
 # export GIT_EDITOR="emacs"
 
 alias la="ls -a"
+alias nx="npx nx"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -95,9 +96,13 @@ alias la="ls -a"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  aws
+  fzf
   zsh-syntax-highlighting
   zsh-autosuggestions
+  zsh-completions
 )
+autoload -U compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
 
@@ -224,4 +229,5 @@ aws_none() {
 export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.gcloud/credentials.json"
 
 
+eval "$(zoxide init --cmd cd zsh)"
 [ -f /usr/share/fzf/shell/key-bindings.zsh ] && source /usr/share/fzf/shell/key-bindings.zsh
