@@ -116,6 +116,13 @@ return {
 		local servers = {
 			gopls = {},
 			tsserver = {
+				root_dir = require("lspconfig").util.root_pattern(
+					"nx.json",
+					"tsconfig.json",
+					"package.json",
+					"jsconfig.json",
+					".git"
+				),
 				init_options = {
 					preferences = {
 						importModuleSpecifierPreference = "project-relative",
