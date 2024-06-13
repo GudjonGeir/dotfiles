@@ -44,11 +44,5 @@ vim.keymap.set("n", "<leader>fee", ":vsplit $MYVIMRC<cr>", { silent = true })
 vim.keymap.set("n", "<leader>fer", ":source $MYVIMRC<cr>", { silent = true })
 vim.keymap.set("n", "<leader>fes", ":source $MYVIMRC<cr>", { silent = true })
 
--- NeoTest
--- vim.keymap.set("n", "<leader>tt", "<cmd>lua require('neotest').run.run()<CR>", { silent = true })
--- vim.keymap.set("n", "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", { silent = true })
--- vim.keymap.set("n", "<leader>tp", "<cmd>lua require('neotest').run.run(vim.fn.getcwd())<CR>", { silent = true })
--- vim.keymap.set("n", "<leader>to", "<cmd>lua require('neotest').summary.toggle()<CR>", { silent = true })
-
 vim.keymap.set("n", "<leader>Tr", ":set relativenumber!<cr>", { silent = true })
 vim.keymap.set("n", "<leader>Tn", ":set number!<cr>", { silent = true })
