@@ -11,6 +11,7 @@ return {
 				typescriptreact = { "eslint_d" },
 				javascriptreact = { "eslint_d" },
 				go = { "golangcilint" },
+				proto = { "buf_lint" },
 
 				-- markdown = { 'markdownlint' },
 			}
