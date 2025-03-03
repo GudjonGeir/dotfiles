@@ -46,6 +46,8 @@ alias m="make"
 export EDITOR="nvim"
 # export GIT_EDITOR="emacs"
 
+alias gcrb="git for-each-ref --sort=-committerdate --count=30 --format='%(refname:short)' refs/heads/ | fzf --height=20% --reverse --info=inline | xargs git checkout"
+
 alias la="ls -a"
 alias nx="npx nx"
 

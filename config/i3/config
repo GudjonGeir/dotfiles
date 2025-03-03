@@ -6,6 +6,17 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango:monospace 8
 
+# Configure 5px of space between windows and to the screen edges.
+gaps inner 8px
+
+# Configure an additional 5px of extra space to the screen edges,
+# for a total gap of 10px to the screen edges, and 5px between windows.
+# gaps outer 5px
+
+
+# Only enable outer gaps when there is exactly one window or split container on the workspace.
+smart_gaps on
+
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
