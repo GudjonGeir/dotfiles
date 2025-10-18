@@ -4,9 +4,21 @@ return {
 		"nvim-neotest/nvim-nio",
 		"nvim-lua/plenary.nvim",
 		"antoinemadec/FixCursorHold.nvim",
-		"nvim-treesitter/nvim-treesitter",
+		-- {
+		-- 	"nvim-treesitter/nvim-treesitter",
+		-- 	branch = "main",
+		-- },
 
-		"nvim-neotest/neotest-go",
+		{
+			"fredrikaverpil/neotest-golang",
+			version = "*",
+			-- dependencies = {
+			-- 	"andythigpen/nvim-coverage",
+			-- },
+			build = function()
+				vim.system({ "go", "install", "gotest.tools/gotestsum@latest" }):wait() -- Optional, but recommended
+			end,
+		},
 	},
 	keys = {
 		{
@@ -77,13 +89,19 @@ return {
 	-- 	},
 	-- },
 	config = function()
-		---@diagnostic disable-next-line: missing-fields
+		local neotest_golang_opts = {
+			runner = "gotestsum",
+			go_test_args = {
+				"-timeout=3s",
+				-- "-v",
+				-- "-race",
+				-- "-count=1",
+				-- "-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out",
+			},
+		}
 		require("neotest").setup({
-			-- your neotest config here
 			adapters = {
-				require("neotest-go")({
-					recursive_run = true,
-				}),
+				require("neotest-golang")(neotest_golang_opts),
 			},
 		})
 	end,

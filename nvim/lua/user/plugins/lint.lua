@@ -16,6 +16,18 @@ return {
 				-- markdown = { 'markdownlint' },
 			}
 
+			-- version 2.something
+			-- lint.linters.golangcilint.args = {
+			-- 	"run",
+			-- 	"--output.json.path=stdout",
+			-- 	"--show-stats=false",
+			-- 	"--output.text.print-issued-lines=false",
+			-- 	"--output.text.print-linter-name=false",
+			-- 	function()
+			-- 		return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
+			-- 	end,
+			-- }
+
 			-- To allow other plugins to add linters to require('lint').linters_by_ft,
 			-- instead set linters_by_ft like this:
 			-- lint.linters_by_ft = lint.linters_by_ft or {}

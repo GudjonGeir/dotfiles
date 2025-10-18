@@ -25,8 +25,10 @@ require("lazy").setup({
 	require("user.plugins.colorizer"),
 	require("user.plugins.indent-blankline"),
 
-	--   -- CoPilot
-	"github/copilot.vim",
+	--  AI
+	-- "github/copilot.vim",
+	require("user.plugins.copilot"),
+	-- require("user.plugins.avante"),
 
 	--   use 'christoomey/vim-tmux-navigator' -- Navigate between vim and tmux panes
 	"tpope/vim-commentary",
@@ -36,6 +38,8 @@ require("lazy").setup({
 	--   use 'editorconfig/editorconfig-vim'
 	"voldikss/vim-floaterm",
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+
+	require("user.plugins.markdown-preview"),
 
 	--   -- Git related plugins
 	--   use 'tpope/vim-rhubarb'

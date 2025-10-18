@@ -123,7 +123,19 @@ return {
 					"jsconfig.json",
 					".git"
 				),
-				init_options = {
+				cmd = { "typescript-language-server", "--stdio", "--verbose" },
+				settings = {
+					typescript = {
+						-- This is the default, but you can change it to `true` if you want
+						--  to enable automatic type acquisition for TypeScript
+						disableAutomaticTypeAcquisition = false,
+						suggest = {
+							autoImports = true,
+							completeFunctionCalls = true,
+							includeCompletionsForModuleExports = true,
+							includeCompletionsWithInsertText = true,
+						},
+					},
 					preferences = {
 						importModuleSpecifierPreference = "project-relative",
 						importModuleSpecifierEnding = "minimal",

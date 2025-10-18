@@ -231,5 +231,7 @@ aws_none() {
 export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.gcloud/credentials.json"
 
 
-eval "$(zoxide init --cmd cd zsh)"
+if [ -z "$DISABLE_ZOXIDE" ]; then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
 [ -f /usr/share/fzf/shell/key-bindings.zsh ] && source /usr/share/fzf/shell/key-bindings.zsh
