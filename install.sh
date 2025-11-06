@@ -33,7 +33,7 @@ rm -rf ~/.vimrc ~/.zshrc ~/.spacemacs ~/.gitconfig ~/config/nvim
 
 # Initialize symlinks.
 echo Creating symlinks in your home directory that point to this dotfiles repository.
-ln -s "$PWD/spacemacs" ~/.spacemacs
+# ln -s "$PWD/spacemacs" ~/.spacemacs
 ln -s "$PWD/zshrc" ~/.zshrc
 ln -s "$PWD/gitconfig" ~/.gitconfig
 ln -s "$PWD/nvim" ~/.config/nvim

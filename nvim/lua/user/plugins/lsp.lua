@@ -14,8 +14,14 @@ return {
 		-- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
 		-- used for completion, annotations and signatures of Neovim apis
 		{ "folke/neodev.nvim", opts = {} },
+
+		-- Allows extra capabilities provided by blink.cmp
+		"saghen/blink.cmp",
 	},
 	config = function()
+		-- Create the highlight autogroup once at the top level
+		local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = true })
+
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 			callback = function(event)
@@ -63,7 +69,6 @@ return {
 				-- When you move your cursor, the highlights will be cleared (the second autocommand).
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
 				if client and client.server_capabilities.documentHighlightProvider then
-					local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 						buffer = event.buf,
 						group = highlight_augroup,
@@ -102,7 +107,9 @@ return {
 		--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
 		--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+		local blinkCapabilities = require("blink.cmp").get_lsp_capabilities()
+
+		capabilities = vim.tbl_deep_extend("force", capabilities, blinkCapabilities or {})
 
 		-- Enable the following language servers
 		--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -187,16 +194,16 @@ return {
 
 		require("mason-lspconfig").setup({
 			automatic_enable = true,
-			-- handlers = {
-			-- 	function(server_name)
-			-- 		local server = servers[server_name] or {}
-			-- 		-- This handles overriding only values explicitly passed
-			-- 		-- by the server configuration above. Useful when disabling
-			-- 		-- certain features of an LSP (for example, turning off formatting for tsserver)
-			-- 		server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-			-- 		require("lspconfig")[server_name].setup(server)
-			-- 	end,
-			-- },
+			handlers = {
+				function(server_name)
+					local server = servers[server_name] or {}
+					-- 		-- This handles overriding only values explicitly passed
+					-- 		-- by the server configuration above. Useful when disabling
+					-- 		-- certain features of an LSP (for example, turning off formatting for tsserver)
+					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+					require("lspconfig")[server_name].setup(server)
+				end,
+			},
 		})
 	end,
 }

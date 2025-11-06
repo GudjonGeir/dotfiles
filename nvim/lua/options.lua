@@ -63,6 +63,6 @@ vim.o.scrolloff = 5
 
 -- fold settings
 vim.opt.foldmethod = "expr" -- Use expression folding
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- Treesitter fold expression
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Treesitter fold expression
 vim.opt.foldenable = true -- Enable folding
 vim.opt.foldlevel = 99 -- Start with all folds open

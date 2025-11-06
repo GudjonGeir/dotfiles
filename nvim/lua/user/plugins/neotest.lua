@@ -63,7 +63,7 @@ return {
 			desc = "Jump to next test",
 		},
 		{
-			"<leader>tp",
+			"<leader>tP",
 			function()
 				require("neotest").jump.prev({ status = "failed" })
 				require("neotest").output.open()
@@ -90,7 +90,7 @@ return {
 	-- },
 	config = function()
 		local neotest_golang_opts = {
-			runner = "gotestsum",
+			runner = "go",
 			go_test_args = {
 				"-timeout=3s",
 				-- "-v",

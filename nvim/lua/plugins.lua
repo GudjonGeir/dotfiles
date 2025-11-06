@@ -12,7 +12,8 @@ require("lazy").setup({
 
 	require("user.plugins.lsp"),
 	require("user.plugins.lint"),
-	require("user.plugins.nvim-cmp"),
+	-- require("user.plugins.nvim-cmp"),
+	require("user.plugins.blink"),
 
 	require("user.plugins.treesitter"),
 	require("user.plugins.which-key"),
