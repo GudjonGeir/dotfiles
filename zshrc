@@ -179,6 +179,51 @@ aws_newcareprod() {
     export AWS_ACCOUNT_ID=371742717794
 }
 
+refresh_sso() {
+    SSO_ACCOUNT=$(aws sts get-caller-identity --query "Account" --profile $AWS_PROFILE)
+    if [ ${#SSO_ACCOUNT} -eq 14 ];  then 
+        # already logged in
+        echo "Already logged in to AWS account $SSO_ACCOUNT"
+    else 
+        aws sso login
+    fi
+}
+
+dev() {
+    export AWS_PROFILE=dala_dev_admin
+    export AWS_REGION=us-east-2
+    export AWS_DEFAULT_REGION=$AWS_REGION
+    export AWS_ACCOUNT_ID=286387522587
+    refresh_sso
+    kubectx dev
+}
+
+euprod() {
+    export AWS_PROFILE=dala_euprod_admin
+    export AWS_REGION=eu-west-1
+    export AWS_DEFAULT_REGION=$AWS_REGION
+    export AWS_ACCOUNT_ID=371742717794
+    refresh_sso
+    kubectx prod-eu
+}
+
+usprod() {
+    export AWS_PROFILE=dala_usprod_admin
+    export AWS_REGION=us-east-2
+    export AWS_DEFAULT_REGION=$AWS_REGION
+    export AWS_ACCOUNT_ID=006422308175
+    refresh_sso
+    kubectx prod-us
+}
+
+dalaroot() {
+    export AWS_PROFILE=dala_root_admin
+    export AWS_REGION=us-east-2
+    export AWS_DEFAULT_REGION=$AWS_REGION
+    export AWS_ACCOUNT_ID=197946143996
+    refresh_sso
+}
+
 aws_ecr_login() {
     aws ecr get-login-password \
         --region $AWS_REGION \
