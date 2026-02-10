@@ -56,6 +56,12 @@ if ask "Install termite config"; then
     ln -s "$PWD/config/termite/config" ~/.config/termite/config
 fi
 
+if ask "Install tmux config"; then
+    rm -rf ~/.config/tmux
+    mkdir -p ~/.config
+    ln -s "$PWD/config/tmux" ~/.config/tmux
+fi
+
 if ask "Install alacritty config"; then
     rm -rf ~/.config/alacritty
     mkdir -p ~/.config

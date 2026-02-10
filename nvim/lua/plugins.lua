@@ -31,7 +31,7 @@ require("lazy").setup({
 	require("user.plugins.copilot"),
 	-- require("user.plugins.avante"),
 
-	--   use 'christoomey/vim-tmux-navigator' -- Navigate between vim and tmux panes
+	"christoomey/vim-tmux-navigator",
 	"tpope/vim-commentary",
 	"qpkorr/vim-bufkill",
 	"tpope/vim-surround",
