@@ -19,6 +19,3 @@ source = ~/.config/hypr/bindings.conf
 source = ~/.config/hypr/envs.conf
 source = ~/.config/hypr/looknfeel.conf
 source = ~/.config/hypr/autostart.conf
-
-
-monitor=eDP-1,2880x1800@90.00,2304x1472,1.80
