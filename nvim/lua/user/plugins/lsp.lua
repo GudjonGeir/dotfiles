@@ -153,6 +153,13 @@ return {
 					documentRangeFormattingProvider = false,
 				},
 			},
+			eslint = {
+				settings = {
+					-- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
+					workingDirectories = { mode = "auto" },
+					-- format = auto_format,
+				},
+			},
 			jsonnet_ls = {},
 			tailwindcss = {},
 			--
@@ -189,6 +196,7 @@ return {
 			"prettierd",
 			"eslint_d",
 			"golangci-lint",
+			"eslint-lsp",
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
