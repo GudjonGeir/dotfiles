@@ -1,0 +1,490 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+RESET='\033[0m'
+
+info()    { echo -e "${GREEN}=>${RESET} $*"; }
+warn()    { echo -e "${YELLOW}=>${RESET} $*"; }
+die()     { echo -e "${RED}error:${RESET} $*" >&2; exit 1; }
+
+confirm() {
+    local prompt="$1"
+    local reply
+    echo -en "${CYAN}${prompt}${RESET} [Y/n] "
+    read -r reply </dev/tty
+    [[ -z "$reply" || "$reply" =~ ^[Yy] ]]
+}
+
+confirm_no() {
+    local prompt="$1"
+    local reply
+    echo -en "${CYAN}${prompt}${RESET} [y/N] "
+    read -r reply </dev/tty
+    [[ "$reply" =~ ^[Yy] ]]
+}
+
+# Find the bare repo or common git dir root
+find_repo_root() {
+    local git_common_dir
+    git_common_dir="$(git rev-parse --git-common-dir 2>/dev/null)" || die "not a git repository"
+
+    # For bare repos, git-common-dir is the repo itself
+    # For worktrees, it points to the main .git dir
+    if [[ "$git_common_dir" == "." ]]; then
+        # We're inside the bare repo
+        pwd
+    elif [[ "$git_common_dir" == ".git" ]]; then
+        # Regular (non-bare) repo — parent of .git
+        git rev-parse --show-toplevel
+    else
+        # Inside a worktree — resolve to parent of the common git dir
+        # For bare repos: common dir IS the bare repo, worktrees sit alongside it
+        local resolved
+        resolved="$(cd "$git_common_dir" && pwd)"
+        echo "$resolved"
+    fi
+}
+
+# Find the worktree checked out to main/master (reference for .env copies)
+find_ref_worktree() {
+    local repo_root="$1"
+    local porcelain branch path main_path first_path
+
+    porcelain="$(git worktree list --porcelain)"
+
+    while IFS= read -r line; do
+        case "$line" in
+            "worktree "*)
+                path="${line#worktree }"
+                ;;
+            "branch "*)
+                branch="${line#branch }"
+                branch="${branch##*/}"  # refs/heads/main → main
+                if [[ "$branch" == "main" || "$branch" == "master" ]]; then
+                    main_path="$path"
+                fi
+                if [[ -z "${first_path:-}" && "$path" != "$repo_root" ]]; then
+                    first_path="$path"
+                fi
+                ;;
+        esac
+    done <<< "$porcelain"
+
+    if [[ -n "${main_path:-}" ]]; then
+        echo "$main_path"
+    elif [[ -n "${first_path:-}" ]]; then
+        echo "$first_path"
+    else
+        return 1
+    fi
+}
+
+# Bare repos often lack the fetch refspec — ensure it's set so
+# refs/remotes/origin/* gets populated on fetch.
+ensure_fetch_refspec() {
+    local current
+    current="$(git config --get-all remote.origin.fetch 2>/dev/null || true)"
+    if ! echo "$current" | grep -qF '+refs/heads/*:refs/remotes/origin/*'; then
+        git config --add remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+    fi
+}
+
+# Copy gitignored .env files from reference worktree to new worktree
+copy_env_files() {
+    local ref_wt="$1"
+    local new_wt="$2"
+    local env_files=()
+
+    while IFS= read -r -d '' file; do
+        local rel="${file#"$ref_wt"/}"
+        # Check if the file is untracked (gitignored)
+        if ! git -C "$ref_wt" ls-files --error-unmatch "$rel" &>/dev/null; then
+            env_files+=("$rel")
+        fi
+    done < <(find "$ref_wt" -name '.env*' -type f \
+        -not -path '*/node_modules/*' \
+        -not -path '*/.terraform/*' \
+        -not -path '*/.git/*' \
+        -print0 2>/dev/null)
+
+    if [[ ${#env_files[@]} -eq 0 ]]; then
+        return
+    fi
+
+    echo ""
+    echo -e "found ${BOLD}${#env_files[@]}${RESET} .env files to copy:"
+    for f in "${env_files[@]}"; do
+        echo "  $f"
+    done
+
+    if confirm "copy to new worktree?"; then
+        for f in "${env_files[@]}"; do
+            mkdir -p "$(dirname "$new_wt/$f")"
+            cp "$ref_wt/$f" "$new_wt/$f"
+        done
+        info "copied ${#env_files[@]} .env files"
+    fi
+}
+
+# Detect and install dependencies in the new worktree
+install_deps() {
+    local new_wt="$1"
+
+    # pnpm / npm — find package.json files
+    local pkg_dirs=()
+    while IFS= read -r -d '' pj; do
+        pkg_dirs+=("$(dirname "$pj")")
+    done < <(find "$new_wt" -maxdepth 3 -name 'package.json' -type f \
+        -not -path '*/node_modules/*' \
+        -not -path '*/.git/*' \
+        -print0 2>/dev/null)
+
+    if [[ ${#pkg_dirs[@]} -gt 0 ]]; then
+        local js_cmd=""
+        if command -v pnpm &>/dev/null; then
+            js_cmd="pnpm"
+        elif command -v npm &>/dev/null; then
+            js_cmd="npm"
+        fi
+
+        if [[ -n "$js_cmd" ]]; then
+            echo ""
+            echo -e "found ${BOLD}package.json${RESET} in:"
+            for d in "${pkg_dirs[@]}"; do
+                echo "  ${d#"$new_wt"/}"
+            done
+
+            if confirm "run $js_cmd install?"; then
+                for d in "${pkg_dirs[@]}"; do
+                    local rel="${d#"$new_wt"/}"
+                    echo -en "  $js_cmd install in ${rel}... "
+                    (cd "$d" && "$js_cmd" install --silent 2>/dev/null) && echo "done" || echo "failed"
+                done
+            fi
+        fi
+    fi
+
+    # go mod download
+    local go_dirs=()
+    while IFS= read -r -d '' gm; do
+        go_dirs+=("$(dirname "$gm")")
+    done < <(find "$new_wt" -maxdepth 3 -name 'go.mod' -type f \
+        -not -path '*/.git/*' \
+        -print0 2>/dev/null)
+
+    if [[ ${#go_dirs[@]} -gt 0 ]] && command -v go &>/dev/null; then
+        echo ""
+        echo -e "found ${BOLD}go.mod${RESET} in:"
+        for d in "${go_dirs[@]}"; do
+            echo "  ${d#"$new_wt"/}"
+        done
+
+        if confirm "run go mod download?"; then
+            for d in "${go_dirs[@]}"; do
+                local rel="${d#"$new_wt"/}"
+                echo -en "  go mod download in ${rel}... "
+                (cd "$d" && go mod download 2>/dev/null) && echo "done" || echo "failed"
+            done
+        fi
+    fi
+}
+
+cmd_add() {
+    local branch="" base="" no_env=false no_deps=false
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --base)   base="$2"; shift 2 ;;
+            --no-env) no_env=true; shift ;;
+            --no-deps) no_deps=true; shift ;;
+            -*)       die "unknown flag: $1" ;;
+            *)
+                if [[ -z "$branch" ]]; then
+                    branch="$1"; shift
+                else
+                    die "unexpected argument: $1"
+                fi
+                ;;
+        esac
+    done
+
+    [[ -n "$branch" ]] || die "usage: git wt add <branch> [--base <branch>] [--no-env] [--no-deps]"
+
+    local repo_root
+    repo_root="$(find_repo_root)"
+
+    # Directory name: slashes → dashes
+    local dir_name="${branch//\//-}"
+    local wt_path="$repo_root/$dir_name"
+
+    [[ ! -d "$wt_path" ]] || die "worktree path already exists: $wt_path"
+
+    info "fetching latest..."
+    ensure_fetch_refspec
+    git fetch --all --quiet 2>/dev/null || true
+
+    # Branch resolution
+    local local_exists=false remote_exists=false
+    git show-ref --verify --quiet "refs/heads/$branch" 2>/dev/null && local_exists=true
+    git show-ref --verify --quiet "refs/remotes/origin/$branch" 2>/dev/null && remote_exists=true
+
+    if [[ "$local_exists" == true ]]; then
+        info "using existing local branch: $branch"
+        git worktree add "$wt_path" "$branch"
+    elif [[ "$remote_exists" == true ]]; then
+        info "tracking remote branch: $branch"
+        git worktree add "$wt_path" "$branch"
+    else
+        base="${base:-main}"
+        # Prefer the remote tracking ref so we branch from the latest fetched state
+        if git show-ref --verify --quiet "refs/remotes/origin/$base" 2>/dev/null; then
+            base="origin/$base"
+        fi
+        info "creating new branch: $branch (from $base)"
+        git worktree add -b "$branch" "$wt_path" "$base"
+    fi
+
+    # Copy .env files
+    if [[ "$no_env" == false ]]; then
+        local ref_wt
+        if ref_wt="$(find_ref_worktree "$repo_root")"; then
+            copy_env_files "$ref_wt" "$wt_path"
+        fi
+    fi
+
+    # Install dependencies
+    if [[ "$no_deps" == false ]]; then
+        install_deps "$wt_path"
+    fi
+
+    echo ""
+    info "worktree ready: ${BOLD}$wt_path${RESET}"
+}
+
+cmd_rm() {
+    local name="${1:-}"
+    local repo_root
+    repo_root="$(find_repo_root)"
+
+    local wt_path=""
+    local branch=""
+
+    if [[ -z "$name" ]]; then
+        # fzf picker
+        command -v fzf &>/dev/null || die "fzf is required when no argument is given"
+
+        local entries=()
+        local porcelain
+        porcelain="$(git worktree list --porcelain)"
+
+        local cur_path="" cur_branch="" is_bare=false
+        while IFS= read -r line; do
+            case "$line" in
+                "worktree "*)
+                    cur_path="${line#worktree }"
+                    is_bare=false
+                    cur_branch=""
+                    ;;
+                "bare")
+                    is_bare=true
+                    ;;
+                "branch "*)
+                    cur_branch="${line#branch }"
+                    cur_branch="${cur_branch##*/}"
+                    ;;
+                "")
+                    if [[ "$is_bare" == false && -n "$cur_path" ]]; then
+                        local display_name
+                        display_name="$(basename "$cur_path")"
+                        entries+=("$display_name	$cur_branch	$cur_path")
+                    fi
+                    cur_path=""
+                    cur_branch=""
+                    is_bare=false
+                    ;;
+            esac
+        done <<< "$porcelain"
+        # Handle last entry (porcelain may not end with blank line)
+        if [[ "$is_bare" == false && -n "$cur_path" ]]; then
+            local display_name
+            display_name="$(basename "$cur_path")"
+            entries+=("$display_name	$cur_branch	$cur_path")
+        fi
+
+        [[ ${#entries[@]} -gt 0 ]] || die "no worktrees to remove"
+
+        local selected
+        selected="$(printf '%s\n' "${entries[@]}" | column -t -s $'\t' | fzf --prompt="remove worktree> ")" || exit 0
+
+        # Extract the path (last field)
+        wt_path="$(echo "$selected" | awk '{print $NF}')"
+        branch="$(echo "$selected" | awk '{print $2}')"
+    else
+        # Direct name → resolve to path
+        wt_path="$repo_root/$name"
+        [[ -d "$wt_path" ]] || die "worktree not found: $wt_path"
+
+        # Find branch for this worktree
+        local porcelain
+        porcelain="$(git worktree list --porcelain)"
+        local cur_path="" cur_branch=""
+        while IFS= read -r line; do
+            case "$line" in
+                "worktree "*)
+                    cur_path="${line#worktree }"
+                    cur_branch=""
+                    ;;
+                "branch "*)
+                    cur_branch="${line#branch }"
+                    cur_branch="${cur_branch##*/}"
+                    ;;
+                "")
+                    if [[ "$cur_path" == "$wt_path" ]]; then
+                        branch="$cur_branch"
+                    fi
+                    cur_path=""
+                    cur_branch=""
+                    ;;
+            esac
+        done <<< "$porcelain"
+        if [[ -z "$branch" && "$cur_path" == "$wt_path" ]]; then
+            branch="$cur_branch"
+        fi
+    fi
+
+    git worktree remove "$wt_path"
+    info "removed worktree: $wt_path"
+
+    if [[ -n "$branch" && "$branch" != "main" && "$branch" != "master" ]]; then
+        if confirm "also delete branch '$branch'?"; then
+            git branch -D "$branch" 2>/dev/null && info "branch deleted: $branch"
+        fi
+    fi
+}
+
+cmd_prune() {
+    local repo_root
+    repo_root="$(find_repo_root)"
+
+    info "fetching latest..."
+    ensure_fetch_refspec
+    git fetch --all --prune --quiet 2>/dev/null || true
+
+    local porcelain
+    porcelain="$(git worktree list --porcelain)"
+
+    local stale=()  # "path<TAB>branch" entries
+    local cur_path="" cur_branch="" is_bare=false
+
+    while IFS= read -r line; do
+        case "$line" in
+            "worktree "*)
+                cur_path="${line#worktree }"
+                is_bare=false
+                cur_branch=""
+                ;;
+            "bare")
+                is_bare=true
+                ;;
+            "branch "*)
+                cur_branch="${line#branch }"
+                cur_branch="${cur_branch##*/}"
+                ;;
+            "")
+                if [[ "$is_bare" == false && -n "$cur_branch" && "$cur_branch" != "main" && "$cur_branch" != "master" ]]; then
+                    if ! git show-ref --verify --quiet "refs/remotes/origin/$cur_branch" 2>/dev/null; then
+                        local dir_name
+                        dir_name="$(basename "$cur_path")"
+                        stale+=("$cur_path	$cur_branch	$dir_name")
+                    fi
+                fi
+                cur_path=""
+                cur_branch=""
+                is_bare=false
+                ;;
+        esac
+    done <<< "$porcelain"
+    # Handle last entry
+    if [[ "$is_bare" == false && -n "$cur_branch" && "$cur_branch" != "main" && "$cur_branch" != "master" ]]; then
+        if ! git show-ref --verify --quiet "refs/remotes/origin/$cur_branch" 2>/dev/null; then
+            local dir_name
+            dir_name="$(basename "$cur_path")"
+            stale+=("$cur_path	$cur_branch	$dir_name")
+        fi
+    fi
+
+    if [[ ${#stale[@]} -eq 0 ]]; then
+        info "no stale worktrees found"
+        return
+    fi
+
+    echo ""
+    echo -e "${BOLD}worktrees with no remote branch:${RESET}"
+    for entry in "${stale[@]}"; do
+        local dir_name branch
+        dir_name="$(echo "$entry" | cut -f3)"
+        branch="$(echo "$entry" | cut -f2)"
+        echo "  $dir_name  (branch: $branch)"
+    done
+    echo ""
+
+    local removed=false
+    for entry in "${stale[@]}"; do
+        local path branch dir_name
+        path="$(echo "$entry" | cut -f1)"
+        branch="$(echo "$entry" | cut -f2)"
+        dir_name="$(echo "$entry" | cut -f3)"
+
+        if confirm_no "remove $dir_name (branch: $branch)?"; then
+            git worktree remove "$path" 2>/dev/null && \
+                git branch -D "$branch" 2>/dev/null && \
+                info "removed $dir_name (branch deleted: $branch)" || \
+                warn "failed to remove $dir_name"
+            removed=true
+        fi
+    done
+
+    if [[ "$removed" == true ]]; then
+        git worktree prune
+        info "pruned worktree metadata"
+    fi
+}
+
+cmd_ls() {
+    git worktree list
+}
+
+usage() {
+    cat <<EOF
+usage: git wt <command> [options]
+
+commands:
+  add <branch> [--base <branch>] [--no-env] [--no-deps]
+      Create a new worktree for the given branch.
+      Copies .env files and installs dependencies by default.
+
+  rm [name]
+      Remove a worktree. Uses fzf picker when no name given.
+
+  ls
+      List all worktrees.
+
+  prune
+      Find worktrees whose remote branch no longer exists and offer cleanup.
+EOF
+}
+
+case "${1:-}" in
+    add)   shift; cmd_add "$@" ;;
+    rm)    shift; cmd_rm "$@" ;;
+    ls)    shift; cmd_ls "$@" ;;
+    prune) shift; cmd_prune "$@" ;;
+    -h|--help|help) usage ;;
+    *)     usage; exit 1 ;;
+esac

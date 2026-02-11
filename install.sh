@@ -80,5 +80,8 @@ if ask "Install rofi config"; then
     ln -s "$PWD/config/rofi" ~/.config/rofi
 fi
 
+mkdir -p ~/.local/bin
+ln -sf "$PWD/utils/git-wt" ~/.local/bin/git-wt
+
 # Finished.
 echo Dotfiles installation complete.
