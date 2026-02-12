@@ -51,7 +51,7 @@ find_repo_root() {
     fi
 }
 
-# Find the worktree checked out to main/master (reference for .env copies)
+# Find the worktree checked out to main/master (reference for .env symlinks)
 find_ref_worktree() {
     local repo_root="$1"
     local porcelain branch path main_path first_path
@@ -95,8 +95,8 @@ ensure_fetch_refspec() {
     fi
 }
 
-# Copy gitignored .env files from reference worktree to new worktree
-copy_env_files() {
+# Symlink gitignored .env files from reference worktree to new worktree
+link_env_files() {
     local ref_wt="$1"
     local new_wt="$2"
     local env_files=()
@@ -118,17 +118,35 @@ copy_env_files() {
     fi
 
     echo ""
-    echo -e "found ${BOLD}${#env_files[@]}${RESET} .env files to copy:"
+    echo -e "found ${BOLD}${#env_files[@]}${RESET} .env files to link:"
     for f in "${env_files[@]}"; do
         echo "  $f"
     done
 
-    if confirm "copy to new worktree?"; then
+    if confirm "symlink to new worktree?"; then
         for f in "${env_files[@]}"; do
             mkdir -p "$(dirname "$new_wt/$f")"
-            cp "$ref_wt/$f" "$new_wt/$f"
+            ln -sf "$ref_wt/$f" "$new_wt/$f"
         done
-        info "copied ${#env_files[@]} .env files"
+        info "linked ${#env_files[@]} .env files"
+    fi
+}
+
+# Symlink Claude Code settings from reference worktree
+link_claude_settings() {
+    local ref_wt="$1"
+    local new_wt="$2"
+
+    local src="$ref_wt/.claude/settings.local.json"
+    [[ -f "$src" ]] || return
+
+    echo ""
+    echo -e "found ${BOLD}.claude/settings.local.json${RESET} in reference worktree"
+
+    if confirm "symlink claude settings from reference worktree?"; then
+        mkdir -p "$new_wt/.claude"
+        ln -sf "$src" "$new_wt/.claude/settings.local.json"
+        info "linked .claude/settings.local.json → $src"
     fi
 }
 
@@ -196,13 +214,14 @@ install_deps() {
 }
 
 cmd_add() {
-    local branch="" base="" no_env=false no_deps=false
+    local branch="" base="" no_env=false no_deps=false no_claude=false
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
             --base)   base="$2"; shift 2 ;;
             --no-env) no_env=true; shift ;;
             --no-deps) no_deps=true; shift ;;
+            --no-claude) no_claude=true; shift ;;
             -*)       die "unknown flag: $1" ;;
             *)
                 if [[ -z "$branch" ]]; then
@@ -214,7 +233,7 @@ cmd_add() {
         esac
     done
 
-    [[ -n "$branch" ]] || die "usage: git wt add <branch> [--base <branch>] [--no-env] [--no-deps]"
+    [[ -n "$branch" ]] || die "usage: git wt add <branch> [--base <branch>] [--no-env] [--no-deps] [--no-claude]"
 
     local repo_root
     repo_root="$(find_repo_root)"
@@ -250,11 +269,19 @@ cmd_add() {
         git worktree add -b "$branch" "$wt_path" "$base"
     fi
 
-    # Copy .env files
+    # Link .env files
     if [[ "$no_env" == false ]]; then
         local ref_wt
         if ref_wt="$(find_ref_worktree "$repo_root")"; then
-            copy_env_files "$ref_wt" "$wt_path"
+            link_env_files "$ref_wt" "$wt_path"
+        fi
+    fi
+
+    # Link Claude settings
+    if [[ "$no_claude" == false ]]; then
+        local ref_wt
+        if ref_wt="$(find_ref_worktree "$repo_root")"; then
+            link_claude_settings "$ref_wt" "$wt_path"
         fi
     fi
 
@@ -465,9 +492,9 @@ usage() {
 usage: git wt <command> [options]
 
 commands:
-  add <branch> [--base <branch>] [--no-env] [--no-deps]
+  add <branch> [--base <branch>] [--no-env] [--no-deps] [--no-claude]
       Create a new worktree for the given branch.
-      Copies .env files and installs dependencies by default.
+      Symlinks .env files, symlinks Claude settings, and installs dependencies by default.
 
   rm [name]
       Remove a worktree. Uses fzf picker when no name given.
