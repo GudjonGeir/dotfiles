@@ -45,6 +45,7 @@ key "prefix  {"              "Move pane left"
 key "prefix  }"              "Move pane right"
 key "prefix  Space"          "Cycle layouts"
 key "C-h/j/k/l"             "Navigate panes (vim-tmux)"
+key "prefix  H/J/K/L"         "Resize pane (vim-style)"
 
 header "$G" "COPY MODE"
 key "prefix  ["              "Enter copy mode"
