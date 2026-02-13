@@ -44,5 +44,27 @@ vim.keymap.set("n", "<leader>fee", ":vsplit $MYVIMRC<cr>", { silent = true })
 vim.keymap.set("n", "<leader>fer", ":source $MYVIMRC<cr>", { silent = true })
 vim.keymap.set("n", "<leader>fes", ":source $MYVIMRC<cr>", { silent = true })
 
+-- Yank file path with line number
+vim.keymap.set("n", "<leader>yl", function()
+	local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":.")
+	local line = vim.fn.line(".")
+	local ref = path .. ":" .. line
+	vim.fn.setreg("+", ref)
+	vim.notify("Yanked: " .. ref)
+end, { desc = "Yank file:line reference" })
+
+vim.keymap.set("v", "<leader>yl", function()
+	local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":.")
+	local start_line = vim.fn.line("v")
+	local end_line = vim.fn.line(".")
+	if start_line > end_line then
+		start_line, end_line = end_line, start_line
+	end
+	local ref = path .. ":" .. start_line .. "-" .. end_line
+	vim.fn.setreg("+", ref)
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+	vim.notify("Yanked: " .. ref)
+end, { desc = "Yank file:line-range reference" })
+
 vim.keymap.set("n", "<leader>Tr", ":set relativenumber!<cr>", { silent = true })
 vim.keymap.set("n", "<leader>Tn", ":set number!<cr>", { silent = true })

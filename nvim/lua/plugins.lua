@@ -45,6 +45,7 @@ require("lazy").setup({
 	--   -- Git related plugins
 	--   use 'tpope/vim-rhubarb'
 	{ "lewis6991/gitsigns.nvim", opts = {} },
+	require("user.plugins.diffview"),
 
 	--   -- Status and buffer lines
 	require("user.plugins.lualine"),

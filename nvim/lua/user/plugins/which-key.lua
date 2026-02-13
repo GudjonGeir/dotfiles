@@ -16,6 +16,7 @@ return {
 			{ "<leader>g", group = "+git/version-control" },
 			{ "<leader>gt", group = "+toggles" },
 
+			{ "<leader>y", group = "+yank" },
 			{ "<leader>t", group = "+tests" },
 			{ "<leader>T", group = "+toggles" },
 			{ "<leader>s", group = "+search" },
