@@ -114,7 +114,7 @@ link_env_files() {
         -print0 2>/dev/null)
 
     if [[ ${#env_files[@]} -eq 0 ]]; then
-        return
+        return 0
     fi
 
     echo ""
@@ -138,7 +138,7 @@ link_claude_settings() {
     local new_wt="$2"
 
     local src="$ref_wt/.claude/settings.local.json"
-    [[ -f "$src" ]] || return
+    [[ -f "$src" ]] || return 0
 
     echo ""
     echo -e "found ${BOLD}.claude/settings.local.json${RESET} in reference worktree"
@@ -173,18 +173,13 @@ install_deps() {
 
         if [[ -n "$js_cmd" ]]; then
             echo ""
-            echo -e "found ${BOLD}package.json${RESET} in:"
             for d in "${pkg_dirs[@]}"; do
-                echo "  ${d#"$new_wt"/}"
-            done
-
-            if confirm "run $js_cmd install?"; then
-                for d in "${pkg_dirs[@]}"; do
-                    local rel="${d#"$new_wt"/}"
+                local rel="${d#"$new_wt"/}"
+                if confirm "run $js_cmd install in ${rel}?"; then
                     echo -en "  $js_cmd install in ${rel}... "
                     (cd "$d" && "$js_cmd" install --silent 2>/dev/null) && echo "done" || echo "failed"
-                done
-            fi
+                fi
+            done
         fi
     fi
 
@@ -198,18 +193,13 @@ install_deps() {
 
     if [[ ${#go_dirs[@]} -gt 0 ]] && command -v go &>/dev/null; then
         echo ""
-        echo -e "found ${BOLD}go.mod${RESET} in:"
         for d in "${go_dirs[@]}"; do
-            echo "  ${d#"$new_wt"/}"
-        done
-
-        if confirm "run go mod download?"; then
-            for d in "${go_dirs[@]}"; do
-                local rel="${d#"$new_wt"/}"
+            local rel="${d#"$new_wt"/}"
+            if confirm "run go mod download in ${rel}?"; then
                 echo -en "  go mod download in ${rel}... "
                 (cd "$d" && go mod download 2>/dev/null) && echo "done" || echo "failed"
-            done
-        fi
+            fi
+        done
     fi
 }
 

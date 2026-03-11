@@ -12,7 +12,7 @@ return {
 				end
 				local branch = result:match("refs/remotes/origin/(.+)") or "main"
 				branch = branch:gsub("%s+$", "")
-				vim.cmd("DiffviewOpen " .. branch .. "...HEAD")
+				vim.cmd("DiffviewOpen origin/" .. branch .. "...HEAD")
 			end,
 			desc = "Diff against default branch",
 		},

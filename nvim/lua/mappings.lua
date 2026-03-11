@@ -1,5 +1,3 @@
-vim.keymap.set("v", "<leader>y", '"+y<cr>', { silent = true })
-
 vim.keymap.set("n", "<leader>bd", ":BD<cr>", { silent = true })
 vim.keymap.set("n", "<leader>bf", ":bfirst<cr>", { silent = true })
 vim.keymap.set("n", "<leader>bl", ":blast<cr>", { silent = true })
@@ -44,6 +42,8 @@ vim.keymap.set("n", "<leader>fee", ":vsplit $MYVIMRC<cr>", { silent = true })
 vim.keymap.set("n", "<leader>fer", ":source $MYVIMRC<cr>", { silent = true })
 vim.keymap.set("n", "<leader>fes", ":source $MYVIMRC<cr>", { silent = true })
 
+-- yank highlighted text to system clipboard
+vim.keymap.set("v", "<leader>yy", '"+y<cr>', { silent = true })
 -- Yank file path with line number
 vim.keymap.set("n", "<leader>yl", function()
 	local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":.")
