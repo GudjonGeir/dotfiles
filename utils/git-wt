@@ -13,8 +13,14 @@ info()    { echo -e "${GREEN}=>${RESET} $*"; }
 warn()    { echo -e "${YELLOW}=>${RESET} $*"; }
 die()     { echo -e "${RED}error:${RESET} $*" >&2; exit 1; }
 
+AUTO_YES=false
+
 confirm() {
     local prompt="$1"
+    if [[ "$AUTO_YES" == true ]]; then
+        echo -e "${CYAN}${prompt}${RESET} [Y/n] y"
+        return 0
+    fi
     local reply
     echo -en "${CYAN}${prompt}${RESET} [Y/n] "
     read -r reply </dev/tty
@@ -150,6 +156,19 @@ link_claude_settings() {
     fi
 }
 
+# Open a tmux session at the given worktree path
+open_tmux_session() {
+    local wt_path="$1"
+    local session_name="$2"
+
+    if [[ -n "${TMUX:-}" ]]; then
+        tmux new-session -d -s "$session_name" -c "$wt_path"
+        tmux switch-client -t "$session_name"
+    else
+        tmux new-session -s "$session_name" -c "$wt_path"
+    fi
+}
+
 # Detect and install dependencies in the new worktree
 install_deps() {
     local new_wt="$1"
@@ -204,7 +223,7 @@ install_deps() {
 }
 
 cmd_add() {
-    local branch="" base="" no_env=false no_deps=false no_claude=false
+    local branch="" base="" no_env=false no_deps=false no_claude=false no_tmux=false
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
@@ -212,6 +231,8 @@ cmd_add() {
             --no-env) no_env=true; shift ;;
             --no-deps) no_deps=true; shift ;;
             --no-claude) no_claude=true; shift ;;
+            --no-tmux) no_tmux=true; shift ;;
+            --yes|-y) AUTO_YES=true; shift ;;
             -*)       die "unknown flag: $1" ;;
             *)
                 if [[ -z "$branch" ]]; then
@@ -223,7 +244,7 @@ cmd_add() {
         esac
     done
 
-    [[ -n "$branch" ]] || die "usage: git wt add <branch> [--base <branch>] [--no-env] [--no-deps] [--no-claude]"
+    [[ -n "$branch" ]] || die "usage: git wt add <branch> [--base <branch>] [--no-env] [--no-deps] [--no-claude] [--no-tmux] [--yes|-y]"
 
     local repo_root
     repo_root="$(find_repo_root)"
@@ -282,6 +303,13 @@ cmd_add() {
 
     echo ""
     info "worktree ready: ${BOLD}$wt_path${RESET}"
+
+    # Offer to open a tmux session
+    if [[ "$no_tmux" == false ]] && command -v tmux &>/dev/null; then
+        if confirm "open tmux session '$dir_name'?"; then
+            open_tmux_session "$wt_path" "$dir_name"
+        fi
+    fi
 }
 
 cmd_rm() {
@@ -482,9 +510,11 @@ usage() {
 usage: git wt <command> [options]
 
 commands:
-  add <branch> [--base <branch>] [--no-env] [--no-deps] [--no-claude]
+  add <branch> [--base <branch>] [--no-env] [--no-deps] [--no-claude] [--no-tmux] [--yes|-y]
       Create a new worktree for the given branch.
-      Symlinks .env files, symlinks Claude settings, and installs dependencies by default.
+      Symlinks .env files, symlinks Claude settings, installs dependencies,
+      and offers to open a tmux session by default.
+      Use --yes/-y to auto-accept all prompts.
 
   rm [name]
       Remove a worktree. Uses fzf picker when no name given.
