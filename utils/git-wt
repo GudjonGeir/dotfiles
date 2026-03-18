@@ -156,6 +156,39 @@ link_claude_settings() {
     fi
 }
 
+# Symlink gitignored files under .claude/skills directories from reference worktree
+link_claude_skills() {
+    local ref_wt="$1"
+    local new_wt="$2"
+
+    local skill_files=()
+    while IFS= read -r -d '' file; do
+        local rel="${file#"$ref_wt"/}"
+        if ! git -C "$ref_wt" ls-files --error-unmatch "$rel" &>/dev/null; then
+            skill_files+=("$rel")
+        fi
+    done < <(find "$ref_wt" -path '*/.claude/skills/*' \( -type f -o -type l \) \
+        -not -path '*/node_modules/*' \
+        -not -path '*/.git/*' \
+        -print0 2>/dev/null)
+
+    [[ ${#skill_files[@]} -gt 0 ]] || return 0
+
+    echo ""
+    echo -e "found ${BOLD}${#skill_files[@]}${RESET} gitignored skill files to link:"
+    for f in "${skill_files[@]}"; do
+        echo "  $f"
+    done
+
+    if confirm "symlink to new worktree?"; then
+        for f in "${skill_files[@]}"; do
+            mkdir -p "$(dirname "$new_wt/$f")"
+            ln -sf "$ref_wt/$f" "$new_wt/$f"
+        done
+        info "linked ${#skill_files[@]} skill files"
+    fi
+}
+
 # Open a tmux session at the given worktree path
 open_tmux_session() {
     local wt_path="$1"
@@ -293,6 +326,7 @@ cmd_add() {
         local ref_wt
         if ref_wt="$(find_ref_worktree "$repo_root")"; then
             link_claude_settings "$ref_wt" "$wt_path"
+            link_claude_skills "$ref_wt" "$wt_path"
         fi
     fi
 
@@ -341,7 +375,7 @@ cmd_rm() {
                     ;;
                 "branch "*)
                     cur_branch="${line#branch }"
-                    cur_branch="${cur_branch##*/}"
+                    cur_branch="${cur_branch#refs/heads/}"
                     ;;
                 "")
                     if [[ "$is_bare" == false && -n "$cur_path" ]]; then
@@ -387,7 +421,7 @@ cmd_rm() {
                     ;;
                 "branch "*)
                     cur_branch="${line#branch }"
-                    cur_branch="${cur_branch##*/}"
+                    cur_branch="${cur_branch#refs/heads/}"
                     ;;
                 "")
                     if [[ "$cur_path" == "$wt_path" ]]; then
@@ -438,8 +472,7 @@ cmd_prune() {
                 is_bare=true
                 ;;
             "branch "*)
-                cur_branch="${line#branch }"
-                cur_branch="${cur_branch##*/}"
+                cur_branch="${line#branch refs/heads/}"
                 ;;
             "")
                 if [[ "$is_bare" == false && -n "$cur_branch" && "$cur_branch" != "main" && "$cur_branch" != "master" ]]; then
@@ -469,36 +502,79 @@ cmd_prune() {
         return
     fi
 
-    echo ""
-    echo -e "${BOLD}worktrees with no remote branch:${RESET}"
-    for entry in "${stale[@]}"; do
-        local dir_name branch
-        dir_name="$(echo "$entry" | cut -f3)"
-        branch="$(echo "$entry" | cut -f2)"
-        echo "  $dir_name  (branch: $branch)"
-    done
-    echo ""
+    # Select which worktrees to remove
+    local selected=()
 
-    local removed=false
-    for entry in "${stale[@]}"; do
+    if command -v fzf &>/dev/null; then
+        # fzf multi-select
+        local display_lines=()
+        for entry in "${stale[@]}"; do
+            local dir_name branch
+            dir_name="$(echo "$entry" | cut -f3)"
+            branch="$(echo "$entry" | cut -f2)"
+            display_lines+=("$(printf '%s\t%s' "$dir_name" "$branch")")
+        done
+
+        local picks
+        picks="$(printf '%s\n' "${display_lines[@]}" | column -t -s $'\t' | \
+            fzf --multi --prompt="select worktrees to remove> " \
+                --header="TAB to select, ENTER to confirm")" || return 0
+
+        while IFS= read -r pick; do
+            local picked_name
+            picked_name="$(echo "$pick" | awk '{print $1}')"
+            for entry in "${stale[@]}"; do
+                local dir_name
+                dir_name="$(echo "$entry" | cut -f3)"
+                if [[ "$dir_name" == "$picked_name" ]]; then
+                    selected+=("$entry")
+                    break
+                fi
+            done
+        done <<< "$picks"
+    else
+        # Prompt-based fallback: collect all answers first
+        echo ""
+        echo -e "${BOLD}worktrees with no remote branch:${RESET}"
+        for entry in "${stale[@]}"; do
+            local dir_name branch
+            dir_name="$(echo "$entry" | cut -f3)"
+            branch="$(echo "$entry" | cut -f2)"
+            echo "  $dir_name  (branch: $branch)"
+        done
+        echo ""
+
+        for entry in "${stale[@]}"; do
+            local dir_name branch
+            dir_name="$(echo "$entry" | cut -f3)"
+            branch="$(echo "$entry" | cut -f2)"
+            if confirm_no "remove $dir_name (branch: $branch)?"; then
+                selected+=("$entry")
+            fi
+        done
+    fi
+
+    if [[ ${#selected[@]} -eq 0 ]]; then
+        info "nothing to remove"
+        return
+    fi
+
+    # Batch remove selected worktrees
+    echo ""
+    for entry in "${selected[@]}"; do
         local path branch dir_name
         path="$(echo "$entry" | cut -f1)"
         branch="$(echo "$entry" | cut -f2)"
         dir_name="$(echo "$entry" | cut -f3)"
 
-        if confirm_no "remove $dir_name (branch: $branch)?"; then
-            git worktree remove "$path" 2>/dev/null && \
-                git branch -D "$branch" 2>/dev/null && \
-                info "removed $dir_name (branch deleted: $branch)" || \
-                warn "failed to remove $dir_name"
-            removed=true
-        fi
+        git worktree remove "$path" 2>/dev/null && \
+            git branch -D "$branch" 2>/dev/null && \
+            info "removed $dir_name (branch deleted: $branch)" || \
+            warn "failed to remove $dir_name"
     done
 
-    if [[ "$removed" == true ]]; then
-        git worktree prune
-        info "pruned worktree metadata"
-    fi
+    git worktree prune
+    info "pruned worktree metadata"
 }
 
 cmd_ls() {
