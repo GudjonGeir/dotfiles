@@ -346,6 +346,54 @@ cmd_add() {
     fi
 }
 
+cmd_sync() {
+    local no_env=false no_claude=false
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --no-env)    no_env=true; shift ;;
+            --no-claude) no_claude=true; shift ;;
+            --yes|-y)    AUTO_YES=true; shift ;;
+            -*)          die "unknown flag: $1" ;;
+            *)           die "unexpected argument: $1" ;;
+        esac
+    done
+
+    # Ensure we're inside a worktree (not main repo or bare repo)
+    local git_common_dir
+    git_common_dir="$(git rev-parse --git-common-dir 2>/dev/null)" || die "not a git repository"
+    if [[ "$git_common_dir" == ".git" || "$git_common_dir" == "." ]]; then
+        die "not inside a worktree"
+    fi
+
+    local current_wt
+    current_wt="$(git rev-parse --show-toplevel)"
+
+    local repo_root
+    repo_root="$(find_repo_root)"
+
+    local ref_wt
+    ref_wt="$(find_ref_worktree "$repo_root")" || die "no reference worktree found"
+
+    if [[ "$current_wt" == "$ref_wt" ]]; then
+        die "already in the reference worktree"
+    fi
+
+    info "syncing symlinks from reference worktree: $ref_wt"
+
+    if [[ "$no_env" == false ]]; then
+        link_env_files "$ref_wt" "$current_wt"
+    fi
+
+    if [[ "$no_claude" == false ]]; then
+        link_claude_settings "$ref_wt" "$current_wt"
+        link_claude_skills "$ref_wt" "$current_wt"
+    fi
+
+    echo ""
+    info "sync complete"
+}
+
 cmd_rm() {
     local name="${1:-}"
     local repo_root
@@ -598,6 +646,10 @@ commands:
   ls
       List all worktrees.
 
+  sync [--no-env] [--no-claude] [--yes|-y]
+      Re-sync symlinks from the reference worktree to the current worktree.
+      Must be run from inside a worktree (not the main repo).
+
   prune
       Find worktrees whose remote branch no longer exists and offer cleanup.
 EOF
@@ -605,6 +657,7 @@ EOF
 
 case "${1:-}" in
     add)   shift; cmd_add "$@" ;;
+    sync)  shift; cmd_sync "$@" ;;
     rm)    shift; cmd_rm "$@" ;;
     ls)    shift; cmd_ls "$@" ;;
     prune) shift; cmd_prune "$@" ;;
